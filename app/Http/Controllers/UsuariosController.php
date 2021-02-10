@@ -236,6 +236,17 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = $this->user::find( $id );
+        $user->syncRoles();
+        $user->syncPermissions();
+        $user->delete();
+        /**
+        * Limpiamos la cache
+        */
+       Artisan::call('cache:clear');
+       /**
+        * Redirigimos a la ruta index
+        */
+       return redirect()->route('usuarios.index');
     }
 }

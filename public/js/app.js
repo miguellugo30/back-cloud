@@ -425,6 +425,44 @@ $(function () {
     });
   });
   /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteUsuario', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var _method = "DELETE";
+        var url = newUrl + "/" + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $(".content ").html(result);
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
    * Funcion para mostrar los errores de los formularios
    */
 
