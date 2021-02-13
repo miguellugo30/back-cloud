@@ -13,7 +13,8 @@ const mix = require('laravel-mix');
 
 mix.js([
         'resources/js/empresas.js',
-        'resources/js/usuarios.js'
+        'resources/js/usuarios.js',
+        'resources/js/acciones_empresa.js'
     ], 'public/js/app.js');
 /*
     .vue()

@@ -226,7 +226,6 @@ return [
     'menu' => [
         [
             'text' => 'Empresas',
-            'url'  => '#',
             'icon' => 'fas fa-fw fa-user',
             'classes' => 'empresas',
             'can' => 'view empresas',
@@ -234,7 +233,6 @@ return [
         ],
         [
             'text' => 'Usuarios',
-            'url'  => '#',
             'icon' => 'fas fa-fw fa-user',
             'classes' => 'usuarios',
             'can' => 'view usuarios',

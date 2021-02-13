@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EmpresasRequest;
+use Illuminate\Support\Facades\Storage;
 /**
  * Modelos
  */
@@ -84,6 +85,10 @@ class EmpresasController extends Controller
             $this->permisos::create(['name' => $newPermissions[$i].$empresa->id]);
         }
         /**
+         * Creamos el directorio de la nueva empresa
+         */
+        Storage::makeDirectory($empresa->id);
+        /**
          * Redirigimos a la ruta index
          */
         return redirect()->route('empresas.index');
@@ -96,7 +101,15 @@ class EmpresasController extends Controller
      */
     public function show($id)
     {
-        return view('empresas.show');
+        /*
+        //Storage::makeDirectory($id);
+        //return Storage::download($id.'/11_101.jpeg');
+        //$url = Storage::url($id.'/11_101.jpeg');
+        //$size = Storage::size($id.'/11_101.jpeg');
+        $time = Storage::lastModified($id.'/11_101.jpeg');
+        $directories = Storage::directories($id);
+        return $directories;
+        */
     }
 
     /**
