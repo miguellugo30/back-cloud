@@ -133,11 +133,11 @@
                                             <i class="fas fa-cloud-upload-alt"></i>
                                             Subir Archivos
                                         </li>
-                                        <li class="list-group-item">
-                                            <input type="checkbox" name="permisos[]" id="permisos[]" value="edit_empresa_{{ $empresa->id }}">
+                                        <!--li class="list-group-item">
+                                            <input type="checkbox" name="permisos[]" id="permisos[]" value="edit_empresa_{{-- $empresa->id --}}">
                                             <i class="far fa-edit"></i>
                                             Editar Archivos
-                                        </li>
+                                        </li-->
                                         <li class="list-group-item">
                                             <input type="checkbox" name="permisos[]" id="permisos[]" value="delete_empresa_{{ $empresa->id }}">
                                             <i class="fas fa-trash"></i>

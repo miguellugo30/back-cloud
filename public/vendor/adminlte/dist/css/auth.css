@@ -1,0 +1,48 @@
+.auth-links {
+    margin-top: 10px;
+}
+
+.login-page,
+.register-page {
+    background-image: url("../img/fondo.jpg") !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% !important;
+}
+
+.login-logo a,
+.register-logo a {
+    color: #fff !important;
+}
+
+.login-box {
+    background-color: rgba(54, 54, 54, 0.6) !important;
+}
+
+.login-card-body .input-group .input-group-text {
+    color: #fff !important;
+    border-top: 0px !important;
+    border-right: 0px !important;
+}
+
+.card {
+    background: none !important;
+    box-shadow: 0 0 0px rgba(0, 0, 0, 0), 0 0px 0px rgba(0, 0, 0, 0) !important;
+    color: #ffffff !important;
+}
+
+.login-card-body,
+.register-card-body {
+    background: none !important;
+    color: #ffffff !important;
+}
+
+.form-control {
+    background-color: transparent !important;
+    color: #fff !important;
+    border: 0px !important;
+    border-bottom-color: currentcolor !important;
+    border-bottom-style: none !important;
+    border-bottom-width: 0px !important;
+    border-bottom: 1px solid !important;
+    font-weight: bold !important;
+}

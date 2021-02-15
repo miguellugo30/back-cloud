@@ -34,7 +34,9 @@
 
         {{-- Right sidebar toggler link --}}
         @if(config('adminlte.right_sidebar'))
-            @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')
+            @if (Auth::user()->hasRole(['Super Admin', 'Administrador']))
+                @include('adminlte::partials.navbar.menu-item-right-sidebar-toggler')
+            @endif
         @endif
     </ul>
 

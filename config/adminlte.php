@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Citics',
+    'title' => 'Intranet',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>Citics</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Intranet</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/intranet.ico',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => 'Intranet',
 
     /*
     |--------------------------------------------------------------------------
@@ -230,14 +230,16 @@ return [
             'classes' => 'empresas',
             'can' => 'view empresas',
             'topnav_right' => true,
+            'url' => '#',
         ],
         [
             'text' => 'Usuarios',
             'icon' => 'fas fa-fw fa-user',
             'classes' => 'usuarios',
             'can' => 'view usuarios',
+            'url' => '#',
             'topnav_right' => true,
-        ],
+        ]
     ],
 
     /*
