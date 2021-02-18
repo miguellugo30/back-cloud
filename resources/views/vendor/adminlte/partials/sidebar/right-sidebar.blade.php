@@ -4,9 +4,7 @@
     <div class="sidebar">
 
         <nav class="mt-2">
-
-            <ul class="nav nav-pills nav-sidebar fixed-colum" data-widget="treeview" role="menu">
-
+            <ul class="nav flex-column" >
                 @each('adminlte::partials.navbar.menu-item-link', $adminlte->menu("navbar-right"), 'item')
             </ul>
         </nav>

@@ -53,9 +53,20 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Empresas', 'users_empresas');
     }
-
+    /**
+     * Relacion a Datos Usuarios
+     *
+     */
     public function DatosUsuarios()
     {
         return $this->hasOne('App\Models\DatosUsuarios', 'user_id', 'id');
+    }
+    /**
+     * Relacion a Log Actividades
+     *
+     */
+    public function LogActividades()
+    {
+        return $this->hasMany('App\Models\LogActividades', 'user_id', 'id');
     }
 }

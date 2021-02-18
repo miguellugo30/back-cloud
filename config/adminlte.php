@@ -226,7 +226,7 @@ return [
     'menu' => [
         [
             'text' => 'Empresas',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-industry',
             'classes' => 'empresas',
             'can' => 'view empresas',
             'topnav_right' => true,
@@ -237,6 +237,14 @@ return [
             'icon' => 'fas fa-fw fa-user',
             'classes' => 'usuarios',
             'can' => 'view usuarios',
+            'url' => '#',
+            'topnav_right' => true,
+        ],
+        [
+            'text' => 'Log',
+            'icon' => 'fas fa-user-secret',
+            'classes' => 'logs',
+            'can' => 'view logs',
             'url' => '#',
             'topnav_right' => true,
         ]
@@ -278,7 +286,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

@@ -114,6 +114,11 @@
                                 </ul>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="5">
+                                <input type="checkbox" class="permisos_config" name="permisos[]" id="permisos[]" data-value="logs" value="view logs"> Log de Actividades
+                            </td>
+                        </tr>
                         @foreach( $empresas as $empresa )
                             <tr>
                                 <td colspan="5">

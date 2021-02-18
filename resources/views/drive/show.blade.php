@@ -1,4 +1,4 @@
-@if (\Str::endsWith($file,['jpeg', 'jpg', 'png']))
+@if (\Str::endsWith($file,['jpeg', 'jpg', 'png', 'ico']))
 
     <img src="{{$file}}" alt="">
 

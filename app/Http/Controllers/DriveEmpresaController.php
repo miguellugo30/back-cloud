@@ -4,7 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+/**
+ * Modelos
+ */
+use App\Models\LogActividades;
+
 
 class DriveEmpresaController extends Controller
 {
@@ -39,6 +45,14 @@ class DriveEmpresaController extends Controller
     public function makeDirectorio(Request $request)
     {
         Storage::makeDirectory($request->ruta."/".$request->nombre);
+        /**
+         * Creamos el log
+         */
+        LogActividades::create([
+            'accion' => 'Crear directorio',
+            'archivo' => $request->ruta."/".$request->nombre,
+            'user_id' => Auth::id(),
+        ]);
     }
     /**
      * Funcion para poder hacer una vista previa de los archivos
@@ -49,6 +63,14 @@ class DriveEmpresaController extends Controller
     public function viewFile(Request $request)
     {
         $file = Storage::url($request->file);
+        /**
+         * Creamos el log
+         */
+        LogActividades::create([
+            'accion' => 'Visualizar Archivo',
+            'archivo' => $request->file,
+            'user_id' => Auth::id(),
+        ]);
         return view('drive.show', compact('file'));
     }
     /**
@@ -65,15 +87,39 @@ class DriveEmpresaController extends Controller
             if ( $request->type == 'directory' )
             {
                 Storage::deleteDirectory($request->file);
+                /**
+                 * Creamos el log
+                 */
+                LogActividades::create([
+                    'accion' => 'Eliminar directorio',
+                    'archivo' => $request->file,
+                    'user_id' => Auth::id(),
+                ]);
             }
             else
             {
                 Storage::delete($request->file);
+                /**
+                 * Creamos el log
+                 */
+                LogActividades::create([
+                    'accion' => 'Eliminar Archivo',
+                    'archivo' => $request->file,
+                    'user_id' => Auth::id(),
+                ]);
             }
 
         }
         else
         {
+            /**
+             * Creamos el log
+             */
+            LogActividades::create([
+                'accion' => 'Mover a Papelera',
+                'archivo' => $request->file,
+                'user_id' => Auth::id(),
+            ]);
             Storage::move($request->file, $data[0]."/Papelera/".$data[1] );
         }
 
@@ -87,6 +133,14 @@ class DriveEmpresaController extends Controller
      */
     public function downloadFile(Request $request)
     {
+        /**
+         * Creamos el log
+         */
+        LogActividades::create([
+            'accion' => 'Descargar Archivo',
+            'archivo' => $request->file,
+            'user_id' => Auth::id(),
+        ]);
         return response()->download(public_path()."/storage/".$request->file);
     }
     /**
@@ -117,6 +171,14 @@ class DriveEmpresaController extends Controller
                     $request->file('files')[$i]->storeAs(
                         $request->ruta, $request->file('files')[$i]->getClientOriginalName()
                     );
+                    /**
+                     * Creamos el log
+                     */
+                    LogActividades::create([
+                        'accion' => 'Subir Archivo',
+                        'archivo' => $request->ruta.'/'.$request->file('files')[$i]->getClientOriginalName(),
+                        'user_id' => Auth::id(),
+                    ]);
                 }
             }
             //return redirect()->route('indexDrive', ['empresa_id' => $request->ruta]);

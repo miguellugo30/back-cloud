@@ -41,6 +41,12 @@ Route::middleware('auth')->group(function() {
     Route::resource('usuarios',App\Http\Controllers\UsuariosController::class);
 });
 /*
+ * Rutas para CRUD de Log Actividades
+ */
+Route::middleware('auth')->group(function() {
+    Route::resource('log-actividades',App\Http\Controllers\LogActividadesController::class);
+});
+/*
  * Rutas para Acciones del drive
  */
 Route::middleware('auth')->prefix('home')->group(function() {
