@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Intranet',
+    'title' => 'Back-Cloud',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>Intranet</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/intranet.ico',
+    'logo' => '<b>Back-Cloud</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/icono.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Intranet',
+    'logo_img_alt' => 'Back-Cloud',
 
     /*
     |--------------------------------------------------------------------------
@@ -225,6 +225,14 @@ return [
 
     'menu' => [
         [
+            'text' => 'Usuarios',
+            'icon' => 'fas fa-fw fa-user',
+            'classes' => 'usuarios',
+            'can' => 'view usuarios',
+            'url' => '#',
+            'topnav_right' => true,
+        ],
+        [
             'text' => 'Empresas',
             'icon' => 'fas fa-industry',
             'classes' => 'empresas',
@@ -233,12 +241,12 @@ return [
             'url' => '#',
         ],
         [
-            'text' => 'Usuarios',
-            'icon' => 'fas fa-fw fa-user',
-            'classes' => 'usuarios',
-            'can' => 'view usuarios',
-            'url' => '#',
+            'text' => 'Conexiones',
+            'icon' => 'fas fa-network-wired',
+            'classes' => 'conexiones',
+            'can' => 'view conexiones',
             'topnav_right' => true,
+            'url' => '#',
         ],
         [
             'text' => 'Log',

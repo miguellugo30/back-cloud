@@ -30,6 +30,13 @@ class PermisosSeeder extends Seeder
         Permission::create(['name' => 'edit usuarios']);
         Permission::create(['name' => 'delete usuarios']);
         /**
+         * Permisos Conexiones
+         */
+        Permission::create(['name' => 'view conexiones']);
+        Permission::create(['name' => 'create conexiones']);
+        Permission::create(['name' => 'edit conexiones']);
+        Permission::create(['name' => 'delete conexiones']);
+        /**
          * Permisos Logs
          */
         Permission::create(['name' => 'view logs']);

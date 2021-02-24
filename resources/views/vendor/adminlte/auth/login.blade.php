@@ -59,12 +59,12 @@
 
         {{-- Login field --}}
         <div class="row">
-            <div class="col-7">
+            <!--div class="col-7">
                 <div class="icheck-primary">
                     <input type="checkbox" name="remember" id="remember">
-                    <label for="remember">{{ __('adminlte::adminlte.remember_me') }}</label>
+                    <label for="remember">{{-- __('adminlte::adminlte.remember_me') --}}</label>
                 </div>
-            </div>
+            </div-->
             <div class="col-5">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                     <span class="fas fa-sign-in-alt"></span>
