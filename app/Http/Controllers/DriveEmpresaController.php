@@ -45,6 +45,7 @@ class DriveEmpresaController extends Controller
     public function makeDirectorio(Request $request)
     {
         Storage::makeDirectory($request->ruta."/".$request->nombre);
+        Storage::makeDirectory($request->ruta."/".$request->nombre."/Papelera");
         /**
          * Creamos el log
          */
@@ -82,6 +83,7 @@ class DriveEmpresaController extends Controller
     public function deleteFile(Request $request)
     {
         $data = explode('/',$request->file);
+
         if ( Str::contains($request->file, 'Papelera') )
         {
             if ( $request->type == 'directory' )
