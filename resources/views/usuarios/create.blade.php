@@ -18,27 +18,6 @@
             <input type="password" class="form-control form-control-sm" id="password_confirmation" placeholder="Contraseña">
         </div>
         <div class="form-group">
-            <label for="tel_movil">Teléfono Móvil :</label>
-            <input type="text" class="form-control form-control-sm" id="tel_movil" placeholder="Teléfono Móvil">
-        </div>
-        <div class="form-group">
-            <label for="tel_fijo">Teléfono Fijo :</label>
-            <input type="text" class="form-control form-control-sm" id="tel_fijo" placeholder="Teléfono Fijo">
-        </div>
-        <div class="form-group">
-            <label for="extension">Extensión :</label>
-            <input type="text" class="form-control form-control-sm" id="extension" placeholder="Extensión">
-        </div>
-        <div class="form-group">
-            <label for="rol">Empresa *:</label>
-            <select name="empresa" id="empresa" class="form-control form-control-sm">
-                <option value="">Selecciona una empresa</option>
-                @foreach( $empresas as $empresa )
-                    <option value="{{ $empresa->id }}">{{ $empresa->razon_social }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
             <label for="rol">Roles *:</label>
             <select name="rol" id="rol" class="form-control form-control-sm">
                 <option value="">Selecciona un rol</option>

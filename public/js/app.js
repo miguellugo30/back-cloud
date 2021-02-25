@@ -1,4 +1,6 @@
 /******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 (() => {
 /*!**********************************!*\
   !*** ./resources/js/empresas.js ***!
@@ -219,6 +221,7 @@ $(function () {
 });
 })();
 
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 (() => {
 /*!**********************************!*\
   !*** ./resources/js/usuarios.js ***!
@@ -309,10 +312,6 @@ $(function () {
     var email = $("#email").val();
     var password = $("#password").val();
     var password_confirmation = $("#password_confirmation").val();
-    var tel_movil = $("#tel_movil").val();
-    var tel_fijo = $("#tel_fijo").val();
-    var extension = $("#extension").val();
-    var empresa = $("#empresa").val();
     var rol = $("#rol").val();
     var arr = $('[name="permisos[]"]:checked').map(function () {
       return this.value;
@@ -325,10 +324,6 @@ $(function () {
       email: email,
       password: password,
       password_confirmation: password_confirmation,
-      tel_movil: tel_movil,
-      tel_fijo: tel_fijo,
-      extension: extension,
-      empresa: empresa,
       rol: rol,
       arr: arr,
       _token: _token
@@ -381,10 +376,6 @@ $(function () {
     var email = $("#email").val();
     var password = $("#password").val();
     var password_confirmation = $("#password_confirmation").val();
-    var tel_movil = $("#tel_movil").val();
-    var tel_fijo = $("#tel_fijo").val();
-    var extension = $("#extension").val();
-    var empresa = $("#empresa").val();
     var rol = $("#rol").val();
     var arr = $('[name="permisos[]"]:checked').map(function () {
       return this.value;
@@ -403,10 +394,6 @@ $(function () {
         email: email,
         password: password,
         password_confirmation: password_confirmation,
-        tel_movil: tel_movil,
-        tel_fijo: tel_fijo,
-        extension: extension,
-        empresa: empresa,
         rol: rol,
         arr: arr,
         _token: _token,
@@ -482,6 +469,7 @@ $(function () {
 });
 })();
 
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 (() => {
 /*!******************************************!*\
   !*** ./resources/js/acciones_empresa.js ***!
@@ -781,6 +769,7 @@ $(function () {
 });
 })();
 
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 (() => {
 /*!****************************************!*\
   !*** ./resources/js/logactividades.js ***!

@@ -22,10 +22,6 @@
             <thead class="thead-light">
                 <th>Nombre</th>
                 <th>Correo</th>
-                <th>Teléfono Fijo</th>
-                <th>Teléfono Movil</th>
-                <th>Extensión</th>
-                <th>Empresa</th>
                 <th>Rol</th>
             </thead>
             <tbody>
@@ -33,10 +29,6 @@
                     <tr data-id="{{ $u->id }}">
                         <td>{{ $u->name }}</td>
                         <td>{{ $u->email }}</td>
-                        <td>{{ $u->DatosUsuarios->telefono_fijo }}</td>
-                        <td>{{ $u->DatosUsuarios->telefono_movil }}</td>
-                        <td>{{ $u->DatosUsuarios->extension }}</td>
-                        <td>{{ $u->Empresas->first()->razon_social }}</td>
                         <td>{{ $u->getRoleNames()->first() }}</td>
                     </tr>
                 @endforeach

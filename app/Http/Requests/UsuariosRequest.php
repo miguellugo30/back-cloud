@@ -28,7 +28,6 @@ class UsuariosRequest extends FormRequest
             'email' => 'required|email|unique:App\Models\User,email',
             'password' => 'required|confirmed|min:8',
             'password_confirmation' => 'required',
-            'empresa' => 'required',
             'rol' => 'required',
         ];
     }
@@ -40,7 +39,6 @@ class UsuariosRequest extends FormRequest
             'email' => 'E-mail',
             'password' => 'Contraseña',
             'password_confirmation' => 'Contraseña',
-            'empresa' => 'Empresa',
             'rol' => 'Rol',
         ];
     }

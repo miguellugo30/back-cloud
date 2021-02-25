@@ -4,7 +4,7 @@
 
 .login-page,
 .register-page {
-    background-image: url("../img/fondo5.jpg") !important;
+    background-image: url("../img/fondo.jpg") !important;
     background-repeat: no-repeat !important;
     background-size: 100% !important;
 }

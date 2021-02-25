@@ -91,10 +91,6 @@ $(function() {
         let email = $("#email").val();
         let password = $("#password").val();
         let password_confirmation = $("#password_confirmation").val();
-        let tel_movil = $("#tel_movil").val();
-        let tel_fijo = $("#tel_fijo").val();
-        let extension = $("#extension").val();
-        let empresa = $("#empresa").val();
         let rol = $("#rol").val();
         let arr = $('[name="permisos[]"]:checked').map(function() {
             return this.value;
@@ -107,10 +103,6 @@ $(function() {
             email: email,
             password: password,
             password_confirmation: password_confirmation,
-            tel_movil: tel_movil,
-            tel_fijo: tel_fijo,
-            extension: extension,
-            empresa: empresa,
             rol: rol,
             arr: arr,
             _token: _token
@@ -173,10 +165,6 @@ $(function() {
         let email = $("#email").val();
         let password = $("#password").val();
         let password_confirmation = $("#password_confirmation").val();
-        let tel_movil = $("#tel_movil").val();
-        let tel_fijo = $("#tel_fijo").val();
-        let extension = $("#extension").val();
-        let empresa = $("#empresa").val();
         let rol = $("#rol").val();
         let arr = $('[name="permisos[]"]:checked').map(function() {
             return this.value;
@@ -195,10 +183,6 @@ $(function() {
                 email: email,
                 password: password,
                 password_confirmation: password_confirmation,
-                tel_movil: tel_movil,
-                tel_fijo: tel_fijo,
-                extension: extension,
-                empresa: empresa,
                 rol: rol,
                 arr: arr,
                 _token: _token,
