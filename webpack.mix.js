@@ -15,6 +15,7 @@ mix.js([
         'resources/js/empresas.js',
         'resources/js/usuarios.js',
         'resources/js/acciones_empresa.js',
+        'resources/js/conexiones.js',
         'resources/js/logactividades.js'
     ], 'public/js/app.js');
 /*

@@ -14,15 +14,7 @@ class Empresas extends Model
      */
     protected $fillable = [
         'razon_social',
-        'rfc',
-        'calle',
-        'numero',
-        'colonia',
-        'municipio',
-        'cp',
-        'telefono_1',
-        'telefono_2',
-        'sitio_web',
+        'intercompania',
     ];
     /**
      * Nombre de la tabla
@@ -45,6 +37,13 @@ class Empresas extends Model
      */
     public function Usuarios()
     {
-        return $this->belongsToMany('App\Models\Users', 'users_empresas');
+        return $this->belongsToMany(Users::class, 'users_empresas');
+    }
+    /**
+     * Relacion con Conexiones una a muchos
+     */
+    public function Conexiones()
+    {
+        return $this->hasMany(Conexiones::class);
     }
 }

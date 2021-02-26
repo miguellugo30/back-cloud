@@ -15,8 +15,7 @@ class EmpresasRequest extends FormRequest
     {
         return [
             'razon_social' => 'required',
-            'rfc' => 'required',
-            'telefono_1' => 'required',
+            'intercompania' => 'required'
         ];
     }
 
@@ -34,8 +33,7 @@ class EmpresasRequest extends FormRequest
     {
         return[
             'razon_social' => 'Razon Social',
-            'rfc' => 'RFC',
-            'telefono_1' => 'Teléfono',
+            'intercompania' => 'Intercompañia'
         ];
     }
 }

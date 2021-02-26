@@ -30,6 +30,6 @@ class LogActividades extends Model
      */
     public function Usuarios()
     {
-        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

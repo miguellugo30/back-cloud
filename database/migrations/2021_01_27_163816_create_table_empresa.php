@@ -15,13 +15,8 @@ class CreateTableEmpresa extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->id();
-            $table->string('razon_social', 100);
-            $table->string('rfc', 50);
-            $table->string('calle', 100)->nullable();
-            $table->string('numero', 100)->nullable();
-            $table->string('colonia', 100)->nullable();
-            $table->string('municipio', 100)->nullable();
-            $table->string('cp', 10)->nullable();
+            $table->string('razon_social', 500);
+            $table->string('intercompania', 100);
             $table->tinyInteger('activo')->unsigned()->default(1);
             $table->timestamps();
             $table->engine = 'InnoDB';

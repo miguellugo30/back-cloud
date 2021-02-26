@@ -37,29 +37,13 @@ $(function () {
   $(document).on('click', '.saveEmpresa', function (event) {
     event.preventDefault();
     var razon_social = $("#razon_social").val();
-    var rfc = $("#rfc").val();
-    var calle = $("#calle").val();
-    var numero = $("#numero").val();
-    var colonia = $("#colonia").val();
-    var municipio = $("#municipio").val();
-    var cp = $("#cp").val();
-    var telefono_1 = $("#telefono_1").val();
-    var telefono_2 = $("#telefono_2").val();
-    var sitio_web = $("#sitio_web").val();
+    var intercompania = $("#intercompania").val();
 
     var _token = $("input[name=_token]").val();
 
     $.post(newUrl, {
       razon_social: razon_social,
-      rfc: rfc,
-      calle: calle,
-      numero: numero,
-      colonia: colonia,
-      municipio: municipio,
-      cp: cp,
-      telefono_1: telefono_1,
-      telefono_2: telefono_2,
-      sitio_web: sitio_web,
+      intercompania: intercompania,
       _token: _token
     }, function (data, textStatus, xhr) {
       $(".content ").html(data);
@@ -107,15 +91,7 @@ $(function () {
   $(document).on('click', '.updateEmpresa', function (event) {
     event.preventDefault();
     var razon_social = $("#razon_social").val();
-    var rfc = $("#rfc").val();
-    var calle = $("#calle").val();
-    var numero = $("#numero").val();
-    var colonia = $("#colonia").val();
-    var municipio = $("#municipio").val();
-    var cp = $("#cp").val();
-    var telefono_1 = $("#telefono_1").val();
-    var telefono_2 = $("#telefono_2").val();
-    var sitio_web = $("#sitio_web").val();
+    var intercompania = $("#intercompania").val();
     var id = $("#idSeleccionado").val();
 
     var _token = $("input[name=_token]").val();
@@ -127,15 +103,7 @@ $(function () {
       type: 'POST',
       data: {
         razon_social: razon_social,
-        rfc: rfc,
-        calle: calle,
-        numero: numero,
-        colonia: colonia,
-        municipio: municipio,
-        cp: cp,
-        telefono_1: telefono_1,
-        telefono_2: telefono_2,
-        sitio_web: sitio_web,
+        intercompania: intercompania,
         _token: _token,
         _method: _method
       },
@@ -765,6 +733,205 @@ $(function () {
     } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
 
     return bytes.toFixed(dp) + ' ' + units[u];
+  }
+});
+})();
+
+// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+(() => {
+/*!************************************!*\
+  !*** ./resources/js/conexiones.js ***!
+  \************************************/
+$(function () {
+  var currentURL = window.location.href;
+  var newUrl = currentURL.replace('home', 'conexiones');
+  $(document).on("click", ".conexiones", function (e) {
+    e.preventDefault();
+    $.get(newUrl, function (data, textStatus, jqXHR) {
+      $(".container-fluid h1").text('Conexiones');
+      $(".content ").html(data);
+    });
+  });
+  /**
+   * Evento para mostrar el formulario de crear un nuevo modulo
+   */
+
+  $(document).on("click", ".newConexion", function (e) {
+    e.preventDefault();
+    $('#tituloModal').html('Nuevo Conexion');
+    $('#action').removeClass('updateConexion');
+    $('#action').addClass('saveConexion');
+    var url = newUrl + '/create';
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para guardar el nuevo modulo
+   */
+
+  $(document).on('click', '.saveConexion', function (event) {
+    event.preventDefault();
+    var empresa = $("#empresa").val();
+    var ruta = $("#ruta").val();
+    var host_principal = $("#host_principal").val();
+    var puerto_principal = $("#puerto_principal").val();
+    var usuario_principal = $("#usuario_principal").val();
+    var contrasena_principal = $("#contrasena_principal").val();
+    var host_secundario = $("#host_secundario").val();
+    var puerto_secundario = $("#puerto_secundario").val();
+    var usuario_secundario = $("#usuario_secundario").val();
+    var contrasena_secundario = $("#contrasena_secundario").val();
+
+    var _token = $("input[name=_token]").val();
+
+    $.post(newUrl, {
+      empresa: empresa,
+      ruta: ruta,
+      host_principal: host_principal,
+      puerto_principal: puerto_principal,
+      usuario_principal: usuario_principal,
+      contrasena_principal: contrasena_principal,
+      host_secundario: host_secundario,
+      puerto_secundario: puerto_secundario,
+      usuario_secundario: usuario_secundario,
+      contrasena_secundario: contrasena_secundario,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $(".content ").html(data);
+    }).done(function () {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido guardado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para mostrar el formulario editar modulo
+   */
+
+  $(document).on('click', '#table-conexiones tbody tr', function (event) {
+    event.preventDefault();
+    var id = $(this).data("id");
+    $(".editConexion").slideDown();
+    $(".deleteConexion").slideDown();
+    $("#idSeleccionado").val(id);
+    $("#table-conexiones tbody tr").removeClass('table-primary');
+    $(this).addClass('table-primary');
+  });
+  /**
+   * Evento para mostrar el formulario de edicion de un canal
+   */
+
+  $(document).on("click", ".editConexion", function (e) {
+    e.preventDefault();
+    $('#tituloModal').html('Editar Conexion');
+    $('#action').removeClass('saveConexion');
+    $('#action').addClass('updateConexion');
+    var id = $("#idSeleccionado").val();
+    var url = newUrl + "/" + id + "/edit";
+    $.get(url, function (data, textStatus, jqXHR) {
+      $('#modal').modal('show');
+      $("#modal-body").html(data);
+    });
+  });
+  /**
+   * Evento para editar el modulo
+   */
+
+  $(document).on('click', '.updateConexion', function (event) {
+    event.preventDefault();
+    var ruta = $("#ruta").val();
+    var host_principal = $("#host_principal").val();
+    var puerto_principal = $("#puerto_principal").val();
+    var usuario_principal = $("#usuario_principal").val();
+    var contrasena_principal = $("#contrasena_principal").val();
+    var id = $("#idSeleccionado").val();
+
+    var _token = $("input[name=_token]").val();
+
+    var _method = "PUT";
+    var url = newUrl + "/" + id;
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: {
+        empresa: id,
+        ruta: ruta,
+        host_principal: host_principal,
+        puerto_principal: puerto_principal,
+        usuario_principal: usuario_principal,
+        contrasena_principal: contrasena_principal,
+        _token: _token,
+        _method: _method
+      },
+      success: function success(result) {
+        $(".content ").html(result);
+      }
+    }).done(function (data) {
+      $('.modal-backdrop ').css('display', 'none');
+      $('#modal').modal('hide');
+      Swal.fire('Correcto!', 'El registro ha sido actualizado.', 'success');
+    }).fail(function (data) {
+      printErrorMsg(data.responseJSON.errors);
+    });
+  });
+  /**
+   * Evento para eliminar el modulo
+   */
+
+  $(document).on('click', '.deleteConexion', function (event) {
+    event.preventDefault();
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "Deseas eliminar el registro seleccionado!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Si, Eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(function (result) {
+      if (result.value) {
+        var id = $("#idSeleccionado").val();
+
+        var _token = $("input[name=_token]").val();
+
+        var _method = "DELETE";
+        var url = newUrl + "/" + id;
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            _token: _token,
+            _method: _method
+          },
+          success: function success(result) {
+            $(".content ").html(result);
+            Swal.fire('Eliminado!', 'El registro ha sido eliminado.', 'success');
+          }
+        });
+      }
+    });
+  });
+  /**
+   * Funcion para mostrar los errores de los formularios
+   */
+
+  function printErrorMsg(msg) {
+    $(".print-error-msg").find("ul").html('');
+    $(".print-error-msg").css('display', 'block');
+    $(".form-control").removeClass('is-invalid');
+
+    for (var clave in msg) {
+      $("#" + clave).addClass('is-invalid');
+
+      if (msg.hasOwnProperty(clave)) {
+        $(".print-error-msg").find("ul").append('<li>' + msg[clave][0] + '</li>');
+      }
+    }
   }
 });
 })();

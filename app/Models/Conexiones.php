@@ -5,29 +5,32 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DatosUsuarios extends Model
+class Conexiones extends Model
 {
     use HasFactory;
     /**
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'telefono_fijo',
-        'telefono_movil',
-        'extension',
-        'user_id'
+        'host',
+        'puerto',
+        'usuario',
+        'contrasena',
+        'ruta',
+        'prioridad',
+        'empresas_id'
     ];
     /**
      * Nombre de la tabla
      */
-    protected $table = 'datos_usuarios';
-    /*
+    protected $table = 'conexiones';
+    /**
      * Funcion para obtener solo los registros activos
+     */
     public function scopeActive($query)
     {
         return $query->where('activo', 1);
     }
-    */
     /*
     |--------------------------------------------------------------------------
     | RELACIONES DE BASE DE DATOS
@@ -36,8 +39,8 @@ class DatosUsuarios extends Model
     /**
      * Relacion uno a uno, con tabla intermedia
      */
-    public function Usuarios()
+    public function Empresas()
     {
-        return $this->belongsTo(Users::class, 'id', 'user_id');
+        return $this->belongsTo(Empresas::class);
     }
 }

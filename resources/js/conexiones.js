@@ -1,27 +1,28 @@
 $(function() {
 
     var currentURL = window.location.href;
-    var newUrl = currentURL.replace('home', 'empresas');
+    var newUrl = currentURL.replace('home', 'conexiones');
 
-    $(document).on("click", ".empresas", function(e) {
+    $(document).on("click", ".conexiones", function(e) {
         e.preventDefault();
 
         $.get(newUrl, function(data, textStatus, jqXHR) {
 
-            $(".container-fluid h1").text('Empresas');
+            $(".container-fluid h1").text('Conexiones');
 
             $(".content ").html(data);
         });
     });
+
     /**
      * Evento para mostrar el formulario de crear un nuevo modulo
      */
-    $(document).on("click", ".newEmpresa", function(e) {
+    $(document).on("click", ".newConexion", function(e) {
 
         e.preventDefault();
-        $('#tituloModal').html('Nuevo Empresa');
-        $('#action').removeClass('updateEmpresa');
-        $('#action').addClass('saveEmpresa');
+        $('#tituloModal').html('Nuevo Conexion');
+        $('#action').removeClass('updateConexion');
+        $('#action').addClass('saveConexion');
 
         let url = newUrl + '/create';
 
@@ -30,19 +31,36 @@ $(function() {
             $("#modal-body").html(data);
         });
     });
+
     /**
      * Evento para guardar el nuevo modulo
      */
-    $(document).on('click', '.saveEmpresa', function(event) {
+    $(document).on('click', '.saveConexion', function(event) {
         event.preventDefault();
 
-        let razon_social = $("#razon_social").val();
-        let intercompania = $("#intercompania").val();
+        let empresa = $("#empresa").val();
+        let ruta = $("#ruta").val();
+        let host_principal = $("#host_principal").val();
+        let puerto_principal = $("#puerto_principal").val();
+        let usuario_principal = $("#usuario_principal").val();
+        let contrasena_principal = $("#contrasena_principal").val();
+        let host_secundario = $("#host_secundario").val();
+        let puerto_secundario = $("#puerto_secundario").val();
+        let usuario_secundario = $("#usuario_secundario").val();
+        let contrasena_secundario = $("#contrasena_secundario").val();
         let _token = $("input[name=_token]").val();
 
         $.post(newUrl, {
-            razon_social: razon_social,
-            intercompania: intercompania,
+            empresa: empresa,
+            ruta: ruta,
+            host_principal: host_principal,
+            puerto_principal: puerto_principal,
+            usuario_principal: usuario_principal,
+            contrasena_principal: contrasena_principal,
+            host_secundario: host_secundario,
+            puerto_secundario: puerto_secundario,
+            usuario_secundario: usuario_secundario,
+            contrasena_secundario: contrasena_secundario,
             _token: _token
         }, function(data, textStatus, xhr) {
 
@@ -60,14 +78,29 @@ $(function() {
         });
     });
     /**
+     * Evento para mostrar el formulario editar modulo
+     */
+    $(document).on('click', '#table-conexiones tbody tr', function(event) {
+        event.preventDefault();
+
+        let id = $(this).data("id");
+        $(".editConexion").slideDown();
+        $(".deleteConexion").slideDown();
+
+        $("#idSeleccionado").val(id);
+
+        $("#table-conexiones tbody tr").removeClass('table-primary');
+        $(this).addClass('table-primary');
+    });
+    /**
      * Evento para mostrar el formulario de edicion de un canal
      */
-    $(document).on("click", ".editEmpresa", function(e) {
+    $(document).on("click", ".editConexion", function(e) {
 
         e.preventDefault();
-        $('#tituloModal').html('Editar Empresa');
-        $('#action').removeClass('saveEmpresa');
-        $('#action').addClass('updateEmpresa');
+        $('#tituloModal').html('Editar Conexion');
+        $('#action').removeClass('saveConexion');
+        $('#action').addClass('updateConexion');
 
         let id = $("#idSeleccionado").val();
 
@@ -79,28 +112,16 @@ $(function() {
         });
     });
     /**
-     * Evento para mostrar el formulario editar modulo
-     */
-    $(document).on('click', '#table-empresas tbody tr', function(event) {
-        event.preventDefault();
-
-        let id = $(this).data("id");
-        $(".editEmpresa").slideDown();
-        $(".deleteEmpresa").slideDown();
-
-        $("#idSeleccionado").val(id);
-
-        $("#table-empresas tbody tr").removeClass('table-primary');
-        $(this).addClass('table-primary');
-    });
-    /**
      * Evento para editar el modulo
      */
-    $(document).on('click', '.updateEmpresa', function(event) {
+    $(document).on('click', '.updateConexion', function(event) {
         event.preventDefault();
 
-        let razon_social = $("#razon_social").val();
-        let intercompania = $("#intercompania").val();
+        let ruta = $("#ruta").val();
+        let host_principal = $("#host_principal").val();
+        let puerto_principal = $("#puerto_principal").val();
+        let usuario_principal = $("#usuario_principal").val();
+        let contrasena_principal = $("#contrasena_principal").val();
         let id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
@@ -110,8 +131,12 @@ $(function() {
             url: url,
             type: 'POST',
             data: {
-                razon_social: razon_social,
-                intercompania: intercompania,
+                empresa: id,
+                ruta: ruta,
+                host_principal: host_principal,
+                puerto_principal: puerto_principal,
+                usuario_principal: usuario_principal,
+                contrasena_principal: contrasena_principal,
                 _token: _token,
                 _method: _method
             },
@@ -133,7 +158,7 @@ $(function() {
     /**
      * Evento para eliminar el modulo
      */
-    $(document).on('click', '.deleteEmpresa', function(event) {
+    $(document).on('click', '.deleteConexion', function(event) {
         event.preventDefault();
         Swal.fire({
             title: '¿Estas seguro?',
@@ -169,17 +194,6 @@ $(function() {
                 });
             }
         });
-    });
-    /**
-     * Evento para mostrar los permisos por menu
-     */
-    $(document).on('click', '.modulo', function() {
-        var id = $(this).data("value");
-        if ($(this).prop('checked')) {
-            $("#sub_cat_" + id).slideDown();
-        } else {
-            $("#sub_cat_" + id).slideUp();
-        }
     });
     /**
      * Funcion para mostrar los errores de los formularios

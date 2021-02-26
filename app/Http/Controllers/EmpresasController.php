@@ -22,13 +22,6 @@ class EmpresasController extends Controller
      */
     public function __construct(Empresas $empresas, Permission $permisos)
     {
-        $this->middleware(function ($request, $next) {
-
-            //$this->empresa_id = Auth::user()->Empresas->first()->id;
-
-            return $next($request);
-        });
-
         $this->empresas = $empresas;
         $this->permisos = $permisos;
     }
@@ -66,28 +59,16 @@ class EmpresasController extends Controller
          */
         $empresa = $this->empresas::create([
                                                 'razon_social' => $request->razon_social,
-                                                'rfc' => $request->rfc,
-                                                'calle' => $request->calle,
-                                                'numero' => $request->numero,
-                                                'colonia' => $request->colonia,
-                                                'municipio' => $request->municipio,
-                                                'cp' => $request->cp,
-                                                'telefono_1' => $request->telefono_1,
-                                                'telefono_2' => $request->telefono_2,
-                                                'sitio_web' => $request->sitio_web,
+                                                'intercompania' => $request->intercompania
                                             ]);
         /**
          * Creamos los permisos para el nueva empresa
          */
-        $newPermissions = array( 'view_empresa_', 'create_empresa_', 'edit_empresa_', 'delete_empresa_', 'upload_empresa_', 'donwload_empresa_' );
+        $newPermissions = array( 'view_empresa_', 'delete_empresa_', 'donwload_empresa_' );
         for ($i=0; $i < count( $newPermissions ); $i++)
         {
             $this->permisos::create(['name' => $newPermissions[$i].$empresa->id]);
         }
-        /**
-         * Creamos el directorio de la nueva empresa
-         */
-        Storage::makeDirectory($empresa->id);
         /**
          * Redirigimos a la ruta index
          */
@@ -142,15 +123,7 @@ class EmpresasController extends Controller
         $this->empresas::where( 'id', $id )
                         ->update([
                             'razon_social' => $request->razon_social,
-                            'rfc' => $request->rfc,
-                            'calle' => $request->calle,
-                            'numero' => $request->numero,
-                            'colonia' => $request->colonia,
-                            'municipio' => $request->municipio,
-                            'cp' => $request->cp,
-                            'telefono_1' => $request->telefono_1,
-                            'telefono_2' => $request->telefono_2,
-                            'sitio_web' => $request->sitio_web,
+                            'intercompania' => $request->intercompania,
                         ]);
         /**
          * Redirigimos a la ruta index

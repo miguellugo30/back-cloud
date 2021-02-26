@@ -20,20 +20,14 @@
     <div class="card-body">
         <table id="table-empresas" class="table table-sm">
             <thead class="thead-light">
+                <th>Inter Compañia</th>
                 <th>Razon Social</th>
-                <th>RFC</th>
-                <th>Teléfono 1</th>
-                <th>Teléfono 2</th>
-                <th>Sitio Web</th>
             </thead>
             <tbody>
                 @foreach ($empresas as $empresa)
                     <tr data-id="{{ $empresa->id }}">
+                        <td>{{ $empresa->intercompania }}</td>
                         <td>{{ $empresa->razon_social }}</td>
-                        <td>{{ $empresa->rfc }}</td>
-                        <td>{{ $empresa->telefono_1 }}</td>
-                        <td>{{ $empresa->telefono_2 }}</td>
-                        <td><a href="{{ $empresa->sitio_web }}">{{ $empresa->sitio_web }}</a></td>
                     </tr>
                 @endforeach
             </tbody>

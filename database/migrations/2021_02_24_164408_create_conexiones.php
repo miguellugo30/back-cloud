@@ -21,6 +21,7 @@ class CreateConexiones extends Migration
             $table->string('contrasena', 500);
             $table->string('ruta', 1000);
             $table->integer('prioridad');
+            $table->tinyInteger('activo')->unsigned()->default(1);
             $table->bigInteger('empresas_id')->unsigned();
             $table->timestamps();
             $table->foreign('empresas_id')->references('id')->on('empresas')->onDelete('cascade')->onUpdate('cascade');

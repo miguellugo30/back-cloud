@@ -12,22 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-Route::get('/', function () {
-    return view('login');
-});
-*/
 Route::get('/', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 /*
  * Rutas para CRUD de Empresas
  */
@@ -45,6 +34,12 @@ Route::middleware('auth')->group(function() {
  */
 Route::middleware('auth')->group(function() {
     Route::resource('log-actividades',App\Http\Controllers\LogActividadesController::class);
+});
+/*
+ * Rutas para CRUD de Conexiones
+ */
+Route::middleware('auth')->group(function() {
+    Route::resource('conexiones',App\Http\Controllers\ConexionesController::class);
 });
 /*
  * Rutas para Acciones del drive
