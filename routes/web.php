@@ -42,6 +42,12 @@ Route::middleware('auth')->group(function() {
     Route::resource('conexiones',App\Http\Controllers\ConexionesController::class);
 });
 /*
+ * Rutas para CRUD de Conexiones
+ */
+Route::middleware('auth')->group(function() {
+    Route::resource('conexion-ssh',App\Http\Controllers\ConexionSshController::class);
+});
+/*
  * Rutas para Acciones del drive
  */
 Route::middleware('auth')->prefix('home')->group(function() {
