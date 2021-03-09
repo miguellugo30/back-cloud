@@ -15,6 +15,10 @@ class Empresas extends Model
     protected $fillable = [
         'razon_social',
         'intercompania',
+        'no_respaldos',
+        'dia_mes',
+        'dia_semana',
+        'fin_mes',
     ];
     /**
      * Nombre de la tabla

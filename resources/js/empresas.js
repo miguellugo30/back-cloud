@@ -38,11 +38,24 @@ $(function() {
 
         let razon_social = $("#razon_social").val();
         let intercompania = $("#intercompania").val();
+        let no_respaldos = $("#no_respaldos").val();
+        let dia_mes = $("#dia_mes").val();
+        let dia_semana = $("#dia_semana").val();
         let _token = $("input[name=_token]").val();
+
+        if( $('#fin_mes').prop('checked') ) {
+            fin_mes = 1;
+        }else{
+            fin_mes = 0;
+        }
 
         $.post(newUrl, {
             razon_social: razon_social,
             intercompania: intercompania,
+            no_respaldos: no_respaldos,
+            dia_mes: dia_mes,
+            dia_semana: dia_semana,
+            fin_mes: fin_mes,
             _token: _token
         }, function(data, textStatus, xhr) {
 
@@ -101,10 +114,19 @@ $(function() {
 
         let razon_social = $("#razon_social").val();
         let intercompania = $("#intercompania").val();
+        let no_respaldos = $("#no_respaldos").val();
+        let dia_mes = $("#dia_mes").val();
+        let dia_semana = $("#dia_semana").val();
         let id = $("#idSeleccionado").val();
         let _token = $("input[name=_token]").val();
         let _method = "PUT";
         let url = newUrl + "/" + id;
+
+        if( $('#fin_mes').prop('checked') ) {
+            fin_mes = 1;
+        }else{
+            fin_mes = 0;
+        }
 
         $.ajax({
             url: url,
@@ -112,6 +134,10 @@ $(function() {
             data: {
                 razon_social: razon_social,
                 intercompania: intercompania,
+                no_respaldos: no_respaldos,
+                dia_mes: dia_mes,
+                dia_semana: dia_semana,
+                fin_mes: fin_mes,
                 _token: _token,
                 _method: _method
             },

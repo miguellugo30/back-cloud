@@ -22,12 +22,26 @@
             <thead class="thead-light">
                 <th>Inter Compañia</th>
                 <th>Razon Social</th>
+                <th>Número de Respaldos</th>
+                <th>Día de la semana</th>
+                <th>Día del mes</th>
+                <th>Conserver fin de mes</th>
             </thead>
             <tbody>
                 @foreach ($empresas as $empresa)
                     <tr data-id="{{ $empresa->id }}">
                         <td>{{ $empresa->intercompania }}</td>
                         <td>{{ $empresa->razon_social }}</td>
+                        <td>{{ $empresa->no_respaldos }}</td>
+                        <td>{{ $empresa->dia_semana }}</td>
+                        <td>{{ $empresa->dia_mes }}</td>
+                        <td>
+                            @if ($empresa->fin_mes)
+                                Si
+                            @else
+                                No
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

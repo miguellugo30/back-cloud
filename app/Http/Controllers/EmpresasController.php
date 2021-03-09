@@ -59,7 +59,11 @@ class EmpresasController extends Controller
          */
         $empresa = $this->empresas::create([
                                                 'razon_social' => $request->razon_social,
-                                                'intercompania' => $request->intercompania
+                                                'intercompania' => $request->intercompania,
+                                                'no_respaldos' => $request->no_respaldos,
+                                                'dia_mes' => $request->dia_mes,
+                                                'dia_semana' => $request->dia_semana,
+                                                'fin_mes' => $request->fin_mes,
                                             ]);
         /**
          * Creamos los permisos para el nueva empresa
@@ -124,6 +128,10 @@ class EmpresasController extends Controller
                         ->update([
                             'razon_social' => $request->razon_social,
                             'intercompania' => $request->intercompania,
+                            'no_respaldos' => $request->no_respaldos,
+                            'dia_mes' => $request->dia_mes,
+                            'dia_semana' => $request->dia_semana,
+                            'fin_mes' => $request->fin_mes,
                         ]);
         /**
          * Redirigimos a la ruta index

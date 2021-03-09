@@ -38,12 +38,25 @@ $(function () {
     event.preventDefault();
     var razon_social = $("#razon_social").val();
     var intercompania = $("#intercompania").val();
+    var no_respaldos = $("#no_respaldos").val();
+    var dia_mes = $("#dia_mes").val();
+    var dia_semana = $("#dia_semana").val();
 
     var _token = $("input[name=_token]").val();
+
+    if ($('#fin_mes').prop('checked')) {
+      fin_mes = 1;
+    } else {
+      fin_mes = 0;
+    }
 
     $.post(newUrl, {
       razon_social: razon_social,
       intercompania: intercompania,
+      no_respaldos: no_respaldos,
+      dia_mes: dia_mes,
+      dia_semana: dia_semana,
+      fin_mes: fin_mes,
       _token: _token
     }, function (data, textStatus, xhr) {
       $(".content ").html(data);
@@ -92,18 +105,32 @@ $(function () {
     event.preventDefault();
     var razon_social = $("#razon_social").val();
     var intercompania = $("#intercompania").val();
+    var no_respaldos = $("#no_respaldos").val();
+    var dia_mes = $("#dia_mes").val();
+    var dia_semana = $("#dia_semana").val();
     var id = $("#idSeleccionado").val();
 
     var _token = $("input[name=_token]").val();
 
     var _method = "PUT";
     var url = newUrl + "/" + id;
+
+    if ($('#fin_mes').prop('checked')) {
+      fin_mes = 1;
+    } else {
+      fin_mes = 0;
+    }
+
     $.ajax({
       url: url,
       type: 'POST',
       data: {
         razon_social: razon_social,
         intercompania: intercompania,
+        no_respaldos: no_respaldos,
+        dia_mes: dia_mes,
+        dia_semana: dia_semana,
+        fin_mes: fin_mes,
         _token: _token,
         _method: _method
       },
