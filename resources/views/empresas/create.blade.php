@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col">
         <div class="form-group">
-            <label for="razon-social">Razon Social *:</label>
+            <label for="razon-social">Razón Social *:</label>
             <input type="text" class="form-control form-control-sm" id="razon_social" placeholder="Razon Social">
             @csrf
         </div>

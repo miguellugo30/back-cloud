@@ -21,11 +21,11 @@
         <table id="table-empresas" class="table table-sm">
             <thead class="thead-light">
                 <th>Inter Compañia</th>
-                <th>Razon Social</th>
+                <th>Razón Social</th>
                 <th>Número de Respaldos</th>
                 <th>Día de la semana</th>
                 <th>Día del mes</th>
-                <th>Conserver fin de mes</th>
+                <th>Conservar fin de mes</th>
             </thead>
             <tbody>
                 @foreach ($empresas as $empresa)
