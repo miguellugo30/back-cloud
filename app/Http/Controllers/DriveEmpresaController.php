@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
  * Modelos
  */
 use App\Models\LogActividades;
+use App\Models\Empresas;
 
 
 class DriveEmpresaController extends Controller
@@ -23,17 +24,21 @@ class DriveEmpresaController extends Controller
      */
     public function index(Request $request)
     {
+        /**
+         * Obtenemos el nombre de la empresa
+         */
+        $nombre = Empresas::select('razon_social')->where('id', $request->ruta)->first();
+
+        /*
         $data = explode('/',$request->ruta);
-        $id = $data[0];
-        //Storage::makeDirectory($id);
-        //return Storage::download($id.'/11_101.jpeg');
-        //$url = Storage::path($request->ruta);
-        $url = $request->ruta;
-        //$size = Storage::size($id.'/11_101.jpeg');
-        //$time = Storage::lastModified($id.'/11_101.jpeg');
-        $directories = Storage::directories($request->ruta);
-        $files = Storage::files($request->ruta);
-        //return $directories;
+        */
+        $id = $request->ruta;
+        $url = str_replace(' ', '', $nombre->razon_social );
+        //dd($url);
+
+        $directories = Storage::disk('NAS')->directories($url);
+        $files = Storage::disk('NAS')->files($url);
+
         return view('drive.index', compact('id', 'directories', 'files', 'url'));
     }
     /**
@@ -110,7 +115,6 @@ class DriveEmpresaController extends Controller
                     'user_id' => Auth::id(),
                 ]);
             }
-
         }
         else
         {
@@ -124,7 +128,6 @@ class DriveEmpresaController extends Controller
             ]);
             Storage::move($request->file, $data[0]."/Papelera/".$data[1] );
         }
-
         //return redirect()->route('indexDrive', ['empresa_id' => $data[0]]);
     }
     /**

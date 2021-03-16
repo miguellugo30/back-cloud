@@ -30,13 +30,7 @@
         </h3>
           <div class="card-tools">
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                    @can('create_empresa_'.$id)
-                        <button type="button" id="makeDirectory" class="btn btn-primary"><i class="fas fa-folder-plus"></i> Crear Carpeta</button>
-                    @endcan
-                    @can('upload_empresa_'.$id)
-                        <button type="button" id="uploadFile" class="btn btn-primary"><i class="fas fa-cloud-upload-alt"></i> Subir Archivo</button>
-                    @endcan
-                    @can('donwload_empresa_'.$id)
+                        @can('donwload_empresa_'.$id)
                         <button type="button" id="downloadFile" class="btn btn-primary" style="display: none"><i class="fas fa-cloud-download-alt"></i> Descargar Archivo</button>
                     @endcan
                     @can('delete_empresa_'.$id)

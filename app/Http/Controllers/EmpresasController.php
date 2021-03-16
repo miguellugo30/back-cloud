@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EmpresasRequest;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Permission;
 /**
  * Modelos
  */
 use App\Models\Empresas;
-use Spatie\Permission\Models\Permission;
 
 class EmpresasController extends Controller
 {

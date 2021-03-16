@@ -26,10 +26,10 @@ class ConexionesRequest extends FormRequest
         return [
             'empresa' => 'required',
             'ruta' => 'required',
-            'host_principal' => 'required|ip',
-            'puerto_principal' => 'required|numeric',
-            'usuario_principal' => 'required',
-            'contrasena_principal' => 'required',
+            //'host_principal' => 'required|ip',
+            //'puerto_principal' => 'required|numeric',
+            //'usuario_principal' => 'required',
+            //'contrasena_principal' => 'required',
         ];
     }
 
@@ -38,10 +38,10 @@ class ConexionesRequest extends FormRequest
         return[
             'empresa' => 'Empresa',
             'ruta' => 'Ruta',
-            'host_principal' => 'Host Pricipal',
-            'puerto_principal' => 'Puerto Principal',
-            'usuario_principal' => 'Usuario Principal',
-            'contrasena_principal' => 'Contraseña Principal',
+            //'host_principal' => 'Host Pricipal',
+            //'puerto_principal' => 'Puerto Principal',
+            //'usuario_principal' => 'Usuario Principal',
+            //'contrasena_principal' => 'Contraseña Principal',
         ];
     }
 }

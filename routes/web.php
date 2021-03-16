@@ -48,6 +48,12 @@ Route::middleware('auth')->group(function() {
     Route::resource('conexion-ssh',App\Http\Controllers\ConexionSshController::class);
 });
 /*
+ * Rutas para CRUD de Conexiones
+ */
+Route::middleware('auth')->group(function() {
+    Route::resource('periocidad',App\Http\Controllers\periocidadRespaldosController::class);
+});
+/*
  * Rutas para Acciones del drive
  */
 Route::middleware('auth')->prefix('home')->group(function() {
