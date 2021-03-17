@@ -205,9 +205,11 @@ $(function() {
                 file: file,
                 _token: _token
             },
+            /*
             xhrFields: {
                 responseType: 'blob'
             },
+            */
             success: function(response){
                 $(".content ").html(response);
                 /*
