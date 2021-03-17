@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 /**
  * Modelos
  */
@@ -34,7 +35,6 @@ class DriveEmpresaController extends Controller
         */
         $id = $request->ruta;
         $url = str_replace(' ', '', $nombre->razon_social );
-        //dd($url);
 
         $directories = Storage::disk('NAS')->directories($url);
         $files = Storage::disk('NAS')->files($url);
@@ -128,7 +128,6 @@ class DriveEmpresaController extends Controller
             ]);
             Storage::move($request->file, $data[0]."/Papelera/".$data[1] );
         }
-        //return redirect()->route('indexDrive', ['empresa_id' => $data[0]]);
     }
     /**
      * Funcion para descar archivos
@@ -146,7 +145,9 @@ class DriveEmpresaController extends Controller
             'archivo' => $request->file,
             'user_id' => Auth::id(),
         ]);
-        return response()->download(public_path()."/storage/".$request->file);
+
+        return Storage::disk('NAS')->download( $request->file);
+
     }
     /**
      * Funcion para subir nuevos archivos
@@ -156,7 +157,6 @@ class DriveEmpresaController extends Controller
      */
     public function uploadFile(Request $request)
     {
-        //dd( $request->file('files') );
         if ( count($request->file()) == 0 )
         {
             return response()->json([
@@ -165,14 +165,14 @@ class DriveEmpresaController extends Controller
                     'newFiles' => [ 'Debe subir por lo menos un archivo' ]
                     ]
                 ], 422);
-            }
-            else
+        }
+        else
+        {
+            for ($i=0; $i < count($request->file('files')); $i++)
             {
-                for ($i=0; $i < count($request->file('files')); $i++)
+                if ( $request->file('files')[$i]->getSize() < 31000000 && $request->file('files')[$i]->getSize() != false )
                 {
-                    if ( $request->file('files')[$i]->getSize() < 31000000 && $request->file('files')[$i]->getSize() != false )
-                    {
-                    //dd( $request->file('files')[$i]->getClientOriginalName() );
+
                     $request->file('files')[$i]->storeAs(
                         $request->ruta, $request->file('files')[$i]->getClientOriginalName()
                     );
@@ -186,7 +186,6 @@ class DriveEmpresaController extends Controller
                     ]);
                 }
             }
-            //return redirect()->route('indexDrive', ['empresa_id' => $request->ruta]);
         }
     }
 }
