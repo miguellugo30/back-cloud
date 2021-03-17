@@ -7,11 +7,13 @@ $(function() {
 
         let id = $(this).data('empresa_id');
         let text = $(this).data('empresa_nombre');
+        let ruta = $(this).data('empresa_ruta');
 
         let _token = $("input[name=_token]").val();
 
         $.post(currentURL+'/drive', {
-            ruta: id,
+            id: id,
+            ruta: ruta,
             _token: _token
         }, function(data, textStatus, xhr) {
 

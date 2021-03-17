@@ -475,11 +475,13 @@ $(function () {
     e.preventDefault();
     var id = $(this).data('empresa_id');
     var text = $(this).data('empresa_nombre');
+    var ruta = $(this).data('empresa_ruta');
 
     var _token = $("input[name=_token]").val();
 
     $.post(currentURL + '/drive', {
-      ruta: id,
+      id: id,
+      ruta: ruta,
       _token: _token
     }, function (data, textStatus, xhr) {
       $(".content ").html(data);

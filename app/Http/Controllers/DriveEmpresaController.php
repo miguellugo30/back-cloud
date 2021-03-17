@@ -25,16 +25,8 @@ class DriveEmpresaController extends Controller
      */
     public function index(Request $request)
     {
-        /**
-         * Obtenemos el nombre de la empresa
-         */
-        $nombre = Empresas::select('razon_social')->where('id', $request->ruta)->first();
-
-        /*
-        $data = explode('/',$request->ruta);
-        */
-        $id = $request->ruta;
-        $url = str_replace(' ', '', $nombre->razon_social );
+        $id = $request->id;
+        $url = $request->ruta;
 
         $directories = Storage::disk('NAS')->directories($url);
         $files = Storage::disk('NAS')->files($url);
