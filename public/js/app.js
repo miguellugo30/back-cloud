@@ -635,11 +635,14 @@ $(function () {
         responseType: 'blob'
       },
       success: function success(response) {
+        $(".content ").html(response);
+        /*
         var blob = new Blob([response]);
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.download = archivo[1];
         link.click();
+        */
       },
       error: function error(blob) {
         console.log(blob);
