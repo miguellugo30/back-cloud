@@ -11,7 +11,7 @@ $(function() {
 
         let _token = $("input[name=_token]").val();
 
-        $.post(currentURL+'/drive', {
+        $.post(currentURL+'/drive-list', {
             id: id,
             ruta: ruta,
             _token: _token
@@ -110,27 +110,56 @@ $(function() {
         let _token = $("input[name=_token]").val();
         $("#fileSelected").val(file);
 
-        if (type == 'file') {
-            $.post(currentURL+'/drive/viewFile', {
-                file: file,
-                _token: _token
-            }, function(data, textStatus, xhr) {
-
-                $('#modal').modal('show');
-                $("#modal-body").html(data);
-            });
-        } else if( type == 'directory' ){
-            $.post(currentURL+'/drive', {
+         if( type == 'directory' ){
+            $.post(currentURL+'/drive-list', {
                 ruta: file,
                 _token: _token
             }, function(data, textStatus, xhr) {
 
                 $(".content ").html(data);
-                $(".container-fluid h1").text('Empresas');
+                //$(".container-fluid h1").text('Empresas');
 
             });
         }
+    });
 
+    $(document).on("click", "#viewList", function(e) {
+        e.preventDefault();
+
+        let ruta = $("#ruta").val();
+        let id = $("#idSeleccionado").val();
+        let _token = $("input[name=_token]").val();
+
+            $.post(currentURL+'/drive-list', {
+                ruta: ruta,
+                id: id,
+                _token: _token
+            }, function(data, textStatus, xhr) {
+
+                $(".content ").html(data);
+                //$(".container-fluid h1").text('Empresas');
+
+            });
+
+    });
+
+    $(document).on("click", "#viewIcons", function(e) {
+        e.preventDefault();
+
+        let ruta = $("#ruta").val();
+        let id = $("#idSeleccionado").val();
+        let _token = $("input[name=_token]").val();
+
+            $.post(currentURL+'/drive', {
+                ruta: ruta,
+                id: id,
+                _token: _token
+            }, function(data, textStatus, xhr) {
+
+                $(".content ").html(data);
+                //$(".container-fluid h1").text('Empresas');
+
+            });
 
     });
 
@@ -169,7 +198,7 @@ $(function() {
                     }, function(data, textStatus, xhr) {
 
                         $(".content ").html(data);
-                        $(".container-fluid h1").text('Empresas');
+                        //$(".container-fluid h1").text('Empresas');
 
                     });
 
@@ -205,26 +234,10 @@ $(function() {
                 file: file,
                 _token: _token
             },
-            /*
-            xhrFields: {
-                responseType: 'blob'
-            },
-            */
             success: function(response){
-                $(".content ").html(response);
-                /*
-                var blob = new Blob([response]);
-                var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = archivo[1];
-                link.click();
-                */
+                console.log(response);
+                window.open (response);
             },
-
-            error: function(blob){
-                console.log(blob);
-            }
-
         });
     });
 
@@ -265,7 +278,7 @@ $(function() {
             }, function(data, textStatus, xhr) {
 
                 $(".content ").html(data);
-                $(".container-fluid h1").text('Empresas');
+                //$(".container-fluid h1").text('Empresas');
 
             });
 
@@ -320,13 +333,13 @@ $(function() {
         let ruta = $(this).data('url_return');
         let _token = $("input[name=_token]").val();
 
-        $.post(currentURL+'/drive', {
+        $.post(currentURL+'/drive-list', {
             ruta: ruta,
             _token: _token
         }, function(data, textStatus, xhr) {
 
             $(".content ").html(data);
-            $(".container-fluid h1").text('Empresas');
+            //$(".container-fluid h1").text('Empresas');
 
         });
     });

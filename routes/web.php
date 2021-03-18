@@ -59,9 +59,11 @@ Route::middleware('auth')->group(function() {
 Route::middleware('auth')->prefix('home')->group(function() {
     Route::post('drive/viewFile', [App\Http\Controllers\DriveEmpresaController::class, 'viewFile'])->name('viewFile');
     Route::post('drive', [App\Http\Controllers\DriveEmpresaController::class, 'index'])->name('indexDrive');
+    Route::post('drive-list', [App\Http\Controllers\DriveEmpresaController::class, 'viewList'])->name('indexDriveList');
     Route::post('drive/upload/file', [App\Http\Controllers\DriveEmpresaController::class, 'uploadFile'])->name('uploadDrive');
     Route::post('drive/downloadFile', [App\Http\Controllers\DriveEmpresaController::class, 'downloadFile'])->name('downloadFile');
     Route::delete('drive/deleteFile', [App\Http\Controllers\DriveEmpresaController::class, 'deleteFile'])->name('deleteFile');
+    Route::post('drive/makeDirectory', [App\Http\Controllers\DriveEmpresaController::class, 'makeDirectorio'])->name('makeDirectory');
     Route::post('drive/makeDirectory', [App\Http\Controllers\DriveEmpresaController::class, 'makeDirectorio'])->name('makeDirectory');
     //Route::resource('drive',App\Http\Controllers\DriveEmpresaController::class);
 });

@@ -15,6 +15,7 @@ class Empresas extends Model
     protected $fillable = [
         'razon_social',
         'intercompania',
+        'url_respaldo',
         'no_respaldos',
         'dia_mes',
         'dia_semana',

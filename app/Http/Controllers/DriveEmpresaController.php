@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 /**
  * Modelos
  */
@@ -28,8 +29,9 @@ class DriveEmpresaController extends Controller
         $id = $request->id;
         $url = $request->ruta;
 
-        $directories = Storage::disk('NAS')->directories($url);
-        $files = Storage::disk('NAS')->files($url);
+        $directories = Storage::disk('NAS_energeticos')->directories($url);
+        $files = Storage::disk('NAS_energeticos')->files($url);
+
 
         return view('drive.index', compact('id', 'directories', 'files', 'url'));
     }
@@ -138,7 +140,12 @@ class DriveEmpresaController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return Storage::disk('NAS')->download( $request->file);
+        $headers = [
+            'Content-Type'  => Storage::disk('NAS_energeticos')->mimeType($request->file),
+            'Content-Length'  => Storage::disk('NAS_energeticos')->size($request->file),
+        ];
+
+        return Storage::disk('NAS_energeticos')->url($request->file);
 
     }
     /**
@@ -180,4 +187,124 @@ class DriveEmpresaController extends Controller
             }
         }
     }
+    /**
+     * Funcion para mostrar el contenido del directior
+     * raiz de la empresa
+     *
+     * @param [int] $id
+     * @return view index
+     */
+    public function viewList(Request $request)
+    {
+        $id = $request->id;
+        $url = $request->ruta;
+
+        $directories = Storage::disk('NAS_energeticos')->directories($url);
+        $files = Storage::disk('NAS_energeticos')->files($url);
+
+        $data = collect();
+
+        foreach ($directories as $d)
+        {
+           $f = collect([
+                    'url' => $d,
+                    'name' => $this->getName( $d ),
+                    'lastModified' => $this->getDate($d),
+                    'type' => $this->getType($d),
+                    'size' => $this->getSize($d),
+           ]);
+
+            $data->push($f);
+        }
+
+        foreach ($files as $d)
+        {
+            $f = collect([
+                    'url' => $d,
+                    'name' => $this->getName( $d ),
+                    'lastModified' => $this->getDate($d),
+                    'type' => $this->getType($d),
+                    'size' => $this->getSize($d),
+                ]);
+
+            $data->push($f);
+        }
+
+        return view('drive.index_list', compact('id', 'data', 'url'));
+    }
+    /**
+     * Funcion para obtener el nombre de un archivo
+     *
+     * @param [string] $file
+     * @return [string] $name
+     */
+    public function getName($file)
+    {
+        $di = explode('/', $file);
+        if ( count($di) > 1 )
+        {
+            return $di[ count($di) -1  ];
+        }
+        else
+        {
+            return $di[0];
+        }
+    }
+    /**
+     * Funcion para obtener la fecha de un archivo
+     *
+     * @param [string] $file
+     * @return [date] $date
+     */
+    public function getDate($file)
+    {
+        $di = Storage::disk('NAS_energeticos')->lastModified($file);
+        $date = Carbon::createFromTimestamp($di)->format('d/m/Y H:i:s');
+
+        return $date;
+
+    }
+    /**
+     * Funcion para obtener el tipo de un archivo
+     *
+     * @param [String] $file
+     * @return [String] $type
+     */
+    public function getType($file)
+    {
+        $ty = explode('/', Storage::disk('NAS_energeticos')->mimeType($file));
+        if ( count($ty) > 1 )
+        {
+            return Str::ucfirst( $ty[ count($ty) -1  ] );
+        }
+        else
+        {
+            return Str::ucfirst( $ty[0] );
+        }
+    }
+    /**
+     * Funcion para obtener el tamaño  de un archivo
+     *
+     * @param [string] $file
+     * @return [string] $size
+     */
+    public function getSize($file)
+    {
+        $size = Storage::disk('NAS_energeticos')->size($file);
+
+        if ($size > 0)
+        {
+            $size = (int) $size;
+            $base = log($size) / log(1024);
+            $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+
+            return round(pow(1024, $base - floor($base)), 2) . $suffixes[floor($base)];
+        }
+        else
+        {
+            return $size;
+        }
+    }
+
+
 }

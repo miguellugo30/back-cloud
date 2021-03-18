@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EmpresasRequest;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
@@ -60,6 +59,7 @@ class EmpresasController extends Controller
         $empresa = $this->empresas::create([
                                                 'razon_social' => $request->razon_social,
                                                 'intercompania' => $request->intercompania,
+                                                'url_respaldo' => $request->url_respaldo,
                                                 'no_respaldos' => $request->no_respaldos,
                                                 'dia_mes' => $request->dia_mes,
                                                 'dia_semana' => $request->dia_semana,
@@ -86,15 +86,7 @@ class EmpresasController extends Controller
      */
     public function show($id)
     {
-        /*
-        //Storage::makeDirectory($id);
-        //return Storage::download($id.'/11_101.jpeg');
-        //$url = Storage::url($id.'/11_101.jpeg');
-        //$size = Storage::size($id.'/11_101.jpeg');
-        $time = Storage::lastModified($id.'/11_101.jpeg');
-        $directories = Storage::directories($id);
-        return $directories;
-        */
+
     }
 
     /**
@@ -110,7 +102,6 @@ class EmpresasController extends Controller
         $empresa = $this->empresas::where( 'id', $id )->get()->first();
 
         return view('empresas.edit', compact('empresa'));
-
     }
 
     /**
@@ -128,6 +119,7 @@ class EmpresasController extends Controller
                         ->update([
                             'razon_social' => $request->razon_social,
                             'intercompania' => $request->intercompania,
+                            'url_respaldo' => $request->url_respaldo,
                             'no_respaldos' => $request->no_respaldos,
                             'dia_mes' => $request->dia_mes,
                             'dia_semana' => $request->dia_semana,

@@ -16,6 +16,7 @@ class EmpresasRequest extends FormRequest
         return [
             'razon_social' => 'required',
             'intercompania' => 'required',
+            'url_respaldo' => 'required',
             'no_respaldos' => 'required'
         ];
     }
@@ -35,6 +36,7 @@ class EmpresasRequest extends FormRequest
         return[
             'razon_social' => 'Razon Social',
             'intercompania' => 'Intercompañia',
+            'url_respaldo' => 'Ruta Respaldos',
             'no_respaldos' => 'Número de Respaldos',
         ];
     }

@@ -10,6 +10,10 @@
             <input type="text" class="form-control form-control-sm" id="intercompania" placeholder="Intercompañia" value="{{ $empresa->intercompania }}">
         </div>
         <div class="form-group">
+            <label for="calle">Ruta Respaldo *:</label>
+            <input type="text" class="form-control form-control-sm" id="url_respaldo" placeholder="Ruta Respaldo" value="{{ $empresa->url_respaldo }}">
+        </div>
+        <div class="form-group">
             <label for="calle">Número de respaldos* :</label>
             <input type="number" min="1" class="form-control form-control-sm" id="no_respaldos" placeholder="Número de Respaldos" value="{{ $empresa->no_respaldos }}">
         </div>

@@ -10,6 +10,10 @@
             <input type="text" class="form-control form-control-sm" id="intercompania" placeholder="Intercompañia">
         </div>
         <div class="form-group">
+            <label for="calle">Ruta Respaldo *:</label>
+            <input type="text" class="form-control form-control-sm" id="url_respaldo" placeholder="Ruta Respaldo">
+        </div>
+        <div class="form-group">
             <label for="calle">Número de respaldos* :</label>
             <input type="number" min="1" class="form-control form-control-sm" id="no_respaldos" placeholder="Número de Respaldos">
         </div>

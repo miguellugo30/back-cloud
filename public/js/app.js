@@ -38,6 +38,7 @@ $(function () {
     event.preventDefault();
     var razon_social = $("#razon_social").val();
     var intercompania = $("#intercompania").val();
+    var url_respaldo = $("#url_respaldo").val();
     var no_respaldos = $("#no_respaldos").val();
     var dia_mes = $("#dia_mes").val();
     var dia_semana = $("#dia_semana").val();
@@ -53,6 +54,7 @@ $(function () {
     $.post(newUrl, {
       razon_social: razon_social,
       intercompania: intercompania,
+      url_respaldo: url_respaldo,
       no_respaldos: no_respaldos,
       dia_mes: dia_mes,
       dia_semana: dia_semana,
@@ -105,6 +107,7 @@ $(function () {
     event.preventDefault();
     var razon_social = $("#razon_social").val();
     var intercompania = $("#intercompania").val();
+    var url_respaldo = $("#url_respaldo").val();
     var no_respaldos = $("#no_respaldos").val();
     var dia_mes = $("#dia_mes").val();
     var dia_semana = $("#dia_semana").val();
@@ -127,6 +130,7 @@ $(function () {
       data: {
         razon_social: razon_social,
         intercompania: intercompania,
+        url_respaldo: url_respaldo,
         no_respaldos: no_respaldos,
         dia_mes: dia_mes,
         dia_semana: dia_semana,
@@ -479,7 +483,7 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    $.post(currentURL + '/drive', {
+    $.post(currentURL + '/drive-list', {
       id: id,
       ruta: ruta,
       _token: _token
@@ -557,23 +561,44 @@ $(function () {
 
     $("#fileSelected").val(file);
 
-    if (type == 'file') {
-      $.post(currentURL + '/drive/viewFile', {
-        file: file,
-        _token: _token
-      }, function (data, textStatus, xhr) {
-        $('#modal').modal('show');
-        $("#modal-body").html(data);
-      });
-    } else if (type == 'directory') {
-      $.post(currentURL + '/drive', {
+    if (type == 'directory') {
+      $.post(currentURL + '/drive-list', {
         ruta: file,
         _token: _token
       }, function (data, textStatus, xhr) {
-        $(".content ").html(data);
-        $(".container-fluid h1").text('Empresas');
+        $(".content ").html(data); //$(".container-fluid h1").text('Empresas');
       });
     }
+  });
+  $(document).on("click", "#viewList", function (e) {
+    e.preventDefault();
+    var ruta = $("#ruta").val();
+    var id = $("#idSeleccionado").val();
+
+    var _token = $("input[name=_token]").val();
+
+    $.post(currentURL + '/drive-list', {
+      ruta: ruta,
+      id: id,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $(".content ").html(data); //$(".container-fluid h1").text('Empresas');
+    });
+  });
+  $(document).on("click", "#viewIcons", function (e) {
+    e.preventDefault();
+    var ruta = $("#ruta").val();
+    var id = $("#idSeleccionado").val();
+
+    var _token = $("input[name=_token]").val();
+
+    $.post(currentURL + '/drive', {
+      ruta: ruta,
+      id: id,
+      _token: _token
+    }, function (data, textStatus, xhr) {
+      $(".content ").html(data); //$(".container-fluid h1").text('Empresas');
+    });
   });
   $(document).on("click", "#deleteFile", function (e) {
     e.preventDefault();
@@ -605,8 +630,7 @@ $(function () {
             ruta: ruta,
             _token: _token
           }, function (data, textStatus, xhr) {
-            $(".content ").html(data);
-            $(".container-fluid h1").text('Empresas');
+            $(".content ").html(data); //$(".container-fluid h1").text('Empresas');
           });
         }).done(function () {
           Swal.fire('Eliminado!', 'Se ha eliminado correctamente el archivo.', 'success');
@@ -631,24 +655,9 @@ $(function () {
         file: file,
         _token: _token
       },
-
-      /*
-      xhrFields: {
-          responseType: 'blob'
-      },
-      */
       success: function success(response) {
-        $(".content ").html(response);
-        /*
-        var blob = new Blob([response]);
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = archivo[1];
-        link.click();
-        */
-      },
-      error: function error(blob) {
-        console.log(blob);
+        console.log(response);
+        window.open(response);
       }
     });
   });
@@ -688,8 +697,7 @@ $(function () {
         ruta: ruta,
         _token: _token
       }, function (data, textStatus, xhr) {
-        $(".content ").html(data);
-        $(".container-fluid h1").text('Empresas');
+        $(".content ").html(data); //$(".container-fluid h1").text('Empresas');
       });
       $('.modal-backdrop ').css('display', 'none');
       $('#modalUploadFile').modal('hide');
@@ -719,12 +727,11 @@ $(function () {
 
     var _token = $("input[name=_token]").val();
 
-    $.post(currentURL + '/drive', {
+    $.post(currentURL + '/drive-list', {
       ruta: ruta,
       _token: _token
     }, function (data, textStatus, xhr) {
-      $(".content ").html(data);
-      $(".container-fluid h1").text('Empresas');
+      $(".content ").html(data); //$(".container-fluid h1").text('Empresas');
     });
   });
   /**

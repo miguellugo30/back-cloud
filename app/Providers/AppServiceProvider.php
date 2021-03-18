@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
                     'can' => "view_empresa_".$e->id,
                     'url' => '#',
                     'classes' => 'menu_empresas',
-                    'data' => [ 'empresa_id' => $e->id, 'empresa_nombre' => $e->razon_social, 'empresa_ruta' => str_replace(' ', '', $e->razon_social) ],
+                    'data' => [ 'empresa_id' => $e->id, 'empresa_nombre' => $e->razon_social, 'empresa_ruta' => $e->url_respaldo ],
                 ]);
             }
 

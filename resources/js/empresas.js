@@ -38,6 +38,7 @@ $(function() {
 
         let razon_social = $("#razon_social").val();
         let intercompania = $("#intercompania").val();
+        let url_respaldo = $("#url_respaldo").val();
         let no_respaldos = $("#no_respaldos").val();
         let dia_mes = $("#dia_mes").val();
         let dia_semana = $("#dia_semana").val();
@@ -52,6 +53,7 @@ $(function() {
         $.post(newUrl, {
             razon_social: razon_social,
             intercompania: intercompania,
+            url_respaldo: url_respaldo,
             no_respaldos: no_respaldos,
             dia_mes: dia_mes,
             dia_semana: dia_semana,
@@ -114,6 +116,7 @@ $(function() {
 
         let razon_social = $("#razon_social").val();
         let intercompania = $("#intercompania").val();
+        let url_respaldo = $("#url_respaldo").val();
         let no_respaldos = $("#no_respaldos").val();
         let dia_mes = $("#dia_mes").val();
         let dia_semana = $("#dia_semana").val();
@@ -134,6 +137,7 @@ $(function() {
             data: {
                 razon_social: razon_social,
                 intercompania: intercompania,
+                url_respaldo: url_respaldo,
                 no_respaldos: no_respaldos,
                 dia_mes: dia_mes,
                 dia_semana: dia_semana,
