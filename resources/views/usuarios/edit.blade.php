@@ -108,21 +108,6 @@
                                 <td>
                                     <ul class="list-group">
                                         <li class="list-group-item">
-                                            <input type="checkbox" name="permisos[]" id="permisos[]" value="create_empresa_{{ $empresa->id }}" {{ $usuario->hasPermissionTo( "create_empresa_".$empresa->id ) ? 'checked' : '' }}>
-                                            <i class="fas fa-folder-plus"></i>
-                                            Crear Carpetas
-                                        </li>
-                                        <li class="list-group-item">
-                                            <input type="checkbox" name="permisos[]" id="permisos[]" value="upload_empresa_{{ $empresa->id }}" {{ $usuario->hasPermissionTo( "upload_empresa_".$empresa->id ) ? 'checked' : '' }}>
-                                            <i class="fas fa-cloud-upload-alt"></i>
-                                            Subir Archivos
-                                        </li>
-                                        <li class="list-group-item">
-                                            <input type="checkbox" name="permisos[]" id="permisos[]" value="edit_empresa_{{ $empresa->id }}" {{ $usuario->hasPermissionTo( "edit_empresa_".$empresa->id ) ? 'checked' : '' }}>
-                                            <i class="far fa-edit"></i>
-                                            Editar Archivos
-                                        </li>
-                                        <li class="list-group-item">
                                             <input type="checkbox" name="permisos[]" id="permisos[]" value="delete_empresa_{{ $empresa->id }}" {{ $usuario->hasPermissionTo( "delete_empresa_".$empresa->id ) ? 'checked' : '' }}>
                                             <i class="fas fa-trash"></i>
                                             Eliminar Archivos
