@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function() {
  */
 Route::middleware('auth')->group(function() {
     Route::resource('periocidad',App\Http\Controllers\periocidadRespaldosController::class);
+    Route::get('validar',[App\Http\Controllers\periocidadRespaldosController::class, 'validate_back_currentDay']);
 });
 /*
  * Rutas para Acciones del drive
