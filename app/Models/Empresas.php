@@ -17,7 +17,7 @@ class Empresas extends Model
         'intercompania',
         'url_respaldo',
         'no_respaldos',
-        'dia_mes',
+        'ultimo_anio',
         'dia_semana',
         'fin_mes',
     ];

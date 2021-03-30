@@ -13,14 +13,19 @@ class ErrorBack extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $empresa;
+    private $url;
+    private $fecha;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct( $empresa, $url, $fecha )
     {
-        //
+        $this->empresa = $empresa;
+        $this->url = $url;
+        $this->fecha = $fecha;
     }
 
     /**
@@ -32,8 +37,13 @@ class ErrorBack extends Mailable
     {
 
         return $this->from('fallo.bc@citics.com.mx')
-                    ->subject("Recibo de Gas, 2G Administradora de Gas LP en Condominios")
-                    ->view('mail.errorBack');
+                    ->subject("Back-Cloud, Error en respaldo")
+                    ->view('mail.errorBack')
+                    ->with([
+                        'empresa' => $this->empresa,
+                        'url' => $this->url,
+                        'fecha' => $this->fecha
+                    ]);
 
         //return $this->view('view.name');
     }

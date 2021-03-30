@@ -14,15 +14,11 @@
             <input type="text" class="form-control form-control-sm" id="url_respaldo" placeholder="Ruta Respaldo" value="{{ $empresa->url_respaldo }}">
         </div>
         <div class="form-group">
-            <label for="calle">Número de respaldos* :</label>
-            <input type="number" min="1" class="form-control form-control-sm" id="no_respaldos" placeholder="Número de Respaldos" value="{{ $empresa->no_respaldos }}">
+            <label for="calle">Respaldos diarios* :</label>
+            <input type="number" min="1" max="7" class="form-control form-control-sm" id="no_respaldos" placeholder="Número de Respaldos" value="{{ $empresa->no_respaldos }}">
         </div>
         <div class="form-group">
-            <label for="calle">Conservar los respaldos de los dias :</label>
-            <input type="date" class="form-control form-control-sm" id="dia_mes" placeholder="Día" value="{{ $empresa->dia_mes }}">
-        </div>
-        <div class="form-group">
-            <label for="calle">Conservar el respaldo del día de la semana:</label>
+            <label for="calle">Respaldo semanal:</label>
             <select name="dia_semana" id="dia_semana" class="form-control form-control-sm">
                 <option value="">Selecciona una opción</option>
                 <option value="Monday"  {{ $empresa->dia_semana == "Monday" ? 'selected="selected"' : '' }}>Lunes</option>
@@ -37,7 +33,13 @@
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="fin_mes" {{ $empresa->fin_mes == 1 ? 'checked' : '' }}>
             <label class="form-check-label" for="defaultCheck1">
-                Conservar el respaldo de cada fin de mes
+                Conservar el respaldo de cada fin de mes.
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="ultimo_anio" {{ $empresa->ultimo_anio == 1 ? 'checked' : '' }}>
+            <label class="form-check-label" for="defaultCheck1">
+                Conservar el ultimo del año.
             </label>
         </div>
     </div>

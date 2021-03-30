@@ -7,11 +7,13 @@ use App\Mail\ErrorBack;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
 /**
  * Modelos
  */
 use App\Models\Empresas;
-use Illuminate\Support\Facades\Notification;
+use App\Models\User;
+use phpDocumentor\Reflection\Types\This;
 
 class periocidadRespaldosController extends Controller
 {
@@ -22,77 +24,113 @@ class periocidadRespaldosController extends Controller
 
         foreach ($empresas as $e)
         {
-
-            echo $e->intercompania." ".$e->no_respaldos." ".$e->dia_mes." ".$e->dia_semana." ".$e->fin_mes."<br>";
-            $archivos = array_reverse( Storage::files( "Respaldos/".$e->intercompania )  );
-            echo "<pre>";
-            print_r($archivos);
-            echo "</pre>";
+            $directorios =  $this->getFilesDirectories( $e->url_respaldo, 1  );
             /**
-             * Validamos el Número de Respaldos
+             * Si no se tiene directorios, se sacan los archivos
+             * de la carpeta raíz
              */
-            if ( !$this->num_respaldos( $archivos, $e->no_respaldos ) )
+            if ( count( $directorios ) == 0 )
             {
-                $archivo_obligatorios = array();
-                /**
-                 * Obtenemos los archivos que se tiene que conservar
-                 * con base a la configuración que se tiene
-                 */
-                $n = count($archivos);
-                for ($i=0; $i < $n; $i++)
+                $archivos = $this->getFilesDirectories( $e->url_respaldo, 2  );
+                $this->validarDirectorios($e->url_respaldo);
+                $this->validar_archivos($archivos, $e, $e->url_respaldo);
+            }
+            else
+            {
+                for ($i=0; $i < count($directorios); $i++)
                 {
-                    $fecha = $this->obtener_fecha_nombre( $archivos[$i] );
-
-                    if ($this->dia_mes($fecha, $e->dia_mes))
-                    {
-                        array_push($archivo_obligatorios, $archivos[$i]);
-                        unset($archivos[$i]);
-                    }
-
-                    if ($this->dia_semana($fecha, $e->dia_semana))
-                    {
-                        array_push($archivo_obligatorios, $archivos[$i]);
-                        unset($archivos[$i]);
-                    }
-
-                    if ($this->fin_mes($fecha, $e->fin_mes))
-                    {
-                        array_push($archivo_obligatorios, $archivos[$i]);
-                        unset($archivos[$i]);
-                    }
+                    $this->validarDirectorios($directorios[$i]);
+                    $archivos = $this->getFilesDirectories( $directorios[$i], 2  );
+                    $this->validar_archivos($archivos, $e, $directorios[$i]);
                 }
-                /**
-                 * Obtenemos los archivos a conservar
-                 * con base a al número de respaldos
-                 */
-                $datos = array_values($archivos);
-                $n = count($datos);
-
-                for ($j=0; $j < $n; $j++)
-                {
-                    if ( count( $archivo_obligatorios ) != $e->no_respaldos )
-                    {
-                        if ( !in_array( $datos[$j], $archivo_obligatorios ) )
-                        {
-                            array_push($archivo_obligatorios, $datos[$j]);
-
-                            unset($datos[$j]);
-
-                        }
-                    }
-                }
-                echo "<pre>";
-                print_r($archivo_obligatorios);
-                echo "</pre>";
-                echo "<pre>";
-                print_r($datos);
-                echo "</pre>";
-                /**
-                 * Borramos los archivos que ya no son necesario
-                 */
-                //Storage::delete($datos);
             }
         }
+    }
+    /**
+     * Función para validar que archivos se mueven a que ruta
+     * y cuales se deberan borrar
+     *
+     * @param [array] $archivos
+     * @param [array] $e
+     * @param [string] $ruta
+     * @return void
+     */
+    private function validar_archivos($archivos, $e, $ruta)
+    {
+        /**
+         * Obtenemos los archivos que se tiene que conservar
+         * con base a la configuración que se tiene
+         **/
+        $n = count($archivos);
+        for ($i=0; $i < $n; $i++)
+        {
+            list($nombre, $fecha) = $this->obtener_fecha_nombre( $archivos[$i] );
+
+            if ($this->ultimo_anio($fecha, $e->ultimo_anio))
+            {
+                Storage::disk('NAS_energeticos')->move( $archivos[$i],  $ruta."\Anual\/".$nombre);
+                unset($archivos[$i]);
+            }
+
+            if ($this->fin_mes($fecha, $e->fin_mes))
+            {
+                Storage::disk('NAS_energeticos')->move( $archivos[$i],  $ruta."\Mensual\/".$nombre);
+                unset($archivos[$i]);
+            }
+
+            if ($this->dia_semana($fecha, $e->dia_semana))
+            {
+                $ordernados =$this->ordenarArchivos(  Storage::disk('NAS_energeticos')->allFiles( $ruta."\Semanal" ) );
+
+                if (  count( $ordernados ) != 5 )
+                {
+                    Storage::disk('NAS_energeticos')->move( $archivos[$i],  $ruta.'\Semanal\/'.$nombre);
+                    unset($archivos[$i]);
+                }
+                else
+                {
+                    Storage::disk('NAS_energeticos')->delete($ordernados[0]);
+                    Storage::disk('NAS_energeticos')->move( $archivos[$i],  $ruta.'\Semanal\/'.$nombre);
+                    unset($archivos[$i]);
+                }
+            }
+        }
+        /**
+         * Obtenemos los archivos a conservar
+         * con base a al número de respaldos
+         **/
+        $n = count($archivos);
+        for ($j=0; $j < $n; $j++)
+        {
+            $ordernados =$this->ordenarArchivos(  Storage::disk('NAS_energeticos')->allFiles( $ruta."\Diarios" ) );
+
+            if (  count( $ordernados ) != $e->no_respaldos )
+            {
+                list($nombre, $fecha) = $this->obtener_fecha_nombre( $archivos[$j] );
+                Storage::disk('NAS_energeticos')->move( $archivos[$j],  $ruta.'\Diarios\/'.$nombre);
+
+            }
+            else
+            {
+                if ( count( $archivos ) > 0 )
+                {
+                    Storage::disk('NAS_energeticos')->delete($ordernados[0]);
+
+                    $n = count($archivos);
+                    for ($i=0; $i < $n; $i++)
+                    {
+                        list($nombre, $fecha) = $this->obtener_fecha_nombre( $archivos[$i] );
+                        Storage::disk('NAS_energeticos')->move( $archivos[$i],  $ruta.'\Diarios\/'.$nombre);
+                        unset($archivos[$i]);
+                    }
+                }
+
+            }
+        }
+        /**
+         * Borramos los archivos que ya no son necesario
+         **/
+        Storage::disk('NAS_energeticos')->delete($archivos);
     }
 
     public function validate_back_currentDay()
@@ -101,7 +139,6 @@ class periocidadRespaldosController extends Controller
 
         foreach ($empresas as $e)
         {
-            echo $e->intercompania." ".$e->razon_social."<br><br>";
             $directorios =  $this->getFilesDirectories( $e->url_respaldo, 1  );
             /**
              * Si no se tiene directorios, se sacan los archivos
@@ -109,8 +146,6 @@ class periocidadRespaldosController extends Controller
              */
             if ( count( $directorios ) == 0 )
             {
-                echo "DIRECTORIO ".$e->url_respaldo."<br><br>";
-
                 $archivos = $this->getFilesDirectories( $e->url_respaldo, 2  );
                 /**
                  * Obtenemos la fecha del nombre del archivo
@@ -122,14 +157,12 @@ class periocidadRespaldosController extends Controller
                     $f->push($fecha);
                 }
 
-                $this->mismo_dia($f);
+                $this->mismo_dia($f, $e->razon_social, $e->url_respaldo);
             }
             else
             {
                 for ($i=0; $i < count($directorios); $i++)
                 {
-                    echo "DIRECTORIO ".$directorios[$i]."<br><br>";
-
                     $archivos = $this->getFilesDirectories( $directorios[$i], 2  );
                     /**
                      * Obtenemos la fecha del nombre del archivo
@@ -141,26 +174,10 @@ class periocidadRespaldosController extends Controller
                         $f->push($fecha);
                     }
 
-                    $this->mismo_dia($f);
+                    $this->mismo_dia($f, $e->razon_social, $directorios[$i]);
                 }
             }
         }
-    }
-    /**
-     * Función para validar que se tengas en mismo numero
-     * de respaldos
-     *
-     * @param [array] $archivos
-     * @param [int] $num_respaldos
-     * @return boolean
-     */
-    public function num_respaldos($archivos, $num_respaldos)
-    {
-        if ( count( $archivos ) == $num_respaldos )
-        {
-            return true;
-        }
-        return false;
     }
     /**
      * Función para validar que sea de la misma fecha
@@ -168,17 +185,21 @@ class periocidadRespaldosController extends Controller
      * @param [collect] $fechas
      * @return boolean
      */
-    public function mismo_dia($fechas)
+    private function mismo_dia($fechas, $empresa, $ruta)
     {
         $currentDay = Carbon::now()->isoFormat('G-MM-DD');
-        $currentDay = '2021-03-16';
 
         if (!$fechas->contains($currentDay))
         {
+            /**
+             * Obtenemos los usuarios administradores
+             */
+            $usuarios = User::role(['Administrador'])->select('email')->get();
 
-            Mail::to("ingmchlugo@gmail.com")->send(new ErrorBack('Hola Mundo'));
-
-            echo "NO EXISTE RESPALDO DEL DIA: ".$currentDay. "<br><br>";
+            foreach ($usuarios as $u)
+            {
+                Mail::to($u->email)->send(new ErrorBack($empresa, $ruta, $currentDay));
+            }
         }
     }
     /**
@@ -188,19 +209,27 @@ class periocidadRespaldosController extends Controller
      * @param [date] $dia_semana
      * @return boolean
      */
-    public function dia_mes($fecha, $dia_semana)
+    private function ultimo_anio($fecha, $ultimo_anio)
     {
-        $conf  = Carbon::create( $dia_semana );
-        $diaConf = $conf->isoFormat('DD');
+        //$conf  = Carbon::create( $ultimo_anio );
+        //$diaConf = $conf->isoFormat('DD');
         $f  = Carbon::create( $fecha );
-        $diaArchivo = $f->isoFormat('DD');
 
-        if ( $diaConf == $diaArchivo )
+        $date = date('Y-12-d');
+
+        $L = new \DateTime( $date );
+        $ultimo_dia_anio = $L->format( 'Y-m-t' );
+        $uda  = Carbon::create( $ultimo_dia_anio );
+
+        if ( $ultimo_anio )
         {
-            return true;
+            if ( $uda->equalTo($f) )
+            {
+                return true;
+            }
+            return false;
         }
         return false;
-
     }
     /**
      * Función para validar que sea del dia de la semana
@@ -209,7 +238,7 @@ class periocidadRespaldosController extends Controller
      * @param [date] $dia_semana
      * @return boolean
      */
-    public function dia_semana($fecha, $dia_semana)
+    private function dia_semana($fecha, $dia_semana)
     {
         $ds = date('l', strtotime( $fecha) );
         if ( $dia_semana == $ds )
@@ -225,7 +254,7 @@ class periocidadRespaldosController extends Controller
      * @param [date] $fin_mes
      * @return boolean
      */
-    public function fin_mes($fecha, $fin_mes)
+    private function fin_mes($fecha, $fin_mes)
     {
         $L = new \DateTime( $fecha );
         $ultimo_dia = $L->format( 'Y-m-t' );
@@ -248,13 +277,14 @@ class periocidadRespaldosController extends Controller
      * @param [string] $archivo
      * @return date
      */
-    public function obtener_fecha_nombre($archivo)
+    private function obtener_fecha_nombre($archivo)
     {
         $b = explode( '/', $archivo );
-        $f = explode( '_', $b[count( $b ) - 1]);
+          $f = explode( '_', $b[count( $b ) - 1]);
         $e = explode( '-', $f[ count( $f ) - 2 ]);
         $dt = Carbon::create( '20'.$e[2], $e[1] , $e[0]);
-        return $dt->toDateString();
+
+        return array( $b[count( $b ) - 1], $dt->toDateString() );
 
     }
     /**
@@ -263,17 +293,17 @@ class periocidadRespaldosController extends Controller
      * @param [array] $d
      * @return void
      */
-    public function descartar_directorios( $d )
+    private function descartar_directorios( $d )
     {
         $n = count($d);
         for ($i=0; $i < $n; $i++)
         {
-            if ( Str::contains($d[$i], '@') )
+            if ( Str::contains($d[$i], ['@', 'Diarios', 'Semanal', 'Mensual', 'Anual']) )
             {
                 unset($d[$i]);
             }
         }
-        return $d;
+        return array_values($d);
     }
     /**
      * Función para obtener directorios y archivos
@@ -282,7 +312,7 @@ class periocidadRespaldosController extends Controller
      * @param integer $opc
      * @return array
      */
-    public function getFilesDirectories($url, $opc = 1)
+    private function getFilesDirectories($url, $opc = 1)
     {
         if ($opc == 1)
         {
@@ -294,5 +324,62 @@ class periocidadRespaldosController extends Controller
         }
 
         return $this->descartar_directorios( $d );
+    }
+    /**
+     * Función para order los archivos por fecha
+     *
+     * @param [array] $archivos
+     * @return array
+     */
+    public function ordenarArchivos($archivos)
+    {
+        $n = array();
+
+        for ($i=0; $i < count($archivos); $i++)
+        {
+            list($nombre, $fecha) = $this->obtener_fecha_nombre( $archivos[$i] );
+
+            $p = array( $fecha, $nombre, $archivos[$i] );
+            array_push( $n, $p );
+        }
+
+        usort($n, function ($a, $b) {
+            return strcmp($a[0], $b[0]);
+        });
+
+        return $n;
+
+    }
+    /**
+     * Funcion para validar que existan los directorios
+     * Diarios
+     * Semanal
+     * Mensual
+     * Anual
+     *
+     * @param [string] $ruta
+     * @return void
+     */
+    public function validarDirectorios($ruta)
+    {
+        if( !Storage::disk('NAS_energeticos')->exists($ruta.'\Diarios')  )
+        {
+            Storage::disk('NAS_energeticos')->makeDirectory($ruta.'\Diarios');
+        }
+
+        if( !Storage::disk('NAS_energeticos')->exists($ruta.'\Semanal')  )
+        {
+            Storage::disk('NAS_energeticos')->makeDirectory($ruta.'\Semanal');
+        }
+
+        if( !Storage::disk('NAS_energeticos')->exists($ruta.'\Mensual')  )
+        {
+            Storage::disk('NAS_energeticos')->makeDirectory($ruta.'\Mensual');
+        }
+
+        if( !Storage::disk('NAS_energeticos')->exists($ruta.'\Anual')  )
+        {
+            Storage::disk('NAS_energeticos')->makeDirectory($ruta.'\Anual');
+        }
     }
 }

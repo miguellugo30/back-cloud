@@ -39,9 +39,10 @@ $(function () {
     var razon_social = $("#razon_social").val();
     var intercompania = $("#intercompania").val();
     var url_respaldo = $("#url_respaldo").val();
-    var no_respaldos = $("#no_respaldos").val();
-    var dia_mes = $("#dia_mes").val();
-    var dia_semana = $("#dia_semana").val();
+    var no_respaldos = $("#no_respaldos").val(); //Respaldos diarios
+
+    var dia_semana = $("#dia_semana").val(); //Respaldo semanal
+    //let dia_mes = $("#dia_mes").val();
 
     var _token = $("input[name=_token]").val();
 
@@ -51,12 +52,18 @@ $(function () {
       fin_mes = 0;
     }
 
+    if ($('#ultimo_anio').prop('checked')) {
+      ultimo_anio = 1;
+    } else {
+      ultimo_anio = 0;
+    }
+
     $.post(newUrl, {
       razon_social: razon_social,
       intercompania: intercompania,
       url_respaldo: url_respaldo,
       no_respaldos: no_respaldos,
-      dia_mes: dia_mes,
+      ultimo_anio: ultimo_anio,
       dia_semana: dia_semana,
       fin_mes: fin_mes,
       _token: _token
@@ -109,7 +116,6 @@ $(function () {
     var intercompania = $("#intercompania").val();
     var url_respaldo = $("#url_respaldo").val();
     var no_respaldos = $("#no_respaldos").val();
-    var dia_mes = $("#dia_mes").val();
     var dia_semana = $("#dia_semana").val();
     var id = $("#idSeleccionado").val();
 
@@ -124,6 +130,12 @@ $(function () {
       fin_mes = 0;
     }
 
+    if ($('#ultimo_anio').prop('checked')) {
+      ultimo_anio = 1;
+    } else {
+      ultimo_anio = 0;
+    }
+
     $.ajax({
       url: url,
       type: 'POST',
@@ -132,7 +144,7 @@ $(function () {
         intercompania: intercompania,
         url_respaldo: url_respaldo,
         no_respaldos: no_respaldos,
-        dia_mes: dia_mes,
+        ultimo_anio: ultimo_anio,
         dia_semana: dia_semana,
         fin_mes: fin_mes,
         _token: _token,

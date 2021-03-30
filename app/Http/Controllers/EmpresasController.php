@@ -61,7 +61,7 @@ class EmpresasController extends Controller
                                                 'intercompania' => $request->intercompania,
                                                 'url_respaldo' => $request->url_respaldo,
                                                 'no_respaldos' => $request->no_respaldos,
-                                                'dia_mes' => $request->dia_mes,
+                                                'ultimo_anio' => $request->ultimo_anio,
                                                 'dia_semana' => $request->dia_semana,
                                                 'fin_mes' => $request->fin_mes,
                                             ]);
@@ -121,7 +121,7 @@ class EmpresasController extends Controller
                             'intercompania' => $request->intercompania,
                             'url_respaldo' => $request->url_respaldo,
                             'no_respaldos' => $request->no_respaldos,
-                            'dia_mes' => $request->dia_mes,
+                            'ultimo_anio' => $request->ultimo_anio,
                             'dia_semana' => $request->dia_semana,
                             'fin_mes' => $request->fin_mes,
                         ]);

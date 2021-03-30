@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Http\Controllers\periocidadRespaldosController;
 
-class BorrarRespaldos extends Command
+class validarRespaldoCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sort:backup';
+    protected $signature = 'validate:backup';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Ordernar de respaldos de las empresa con base a la configuración';
+    protected $description = 'Valida Backup del dia corriente';
 
     /**
      * Create a new command instance.
@@ -40,6 +40,6 @@ class BorrarRespaldos extends Command
     {
         $d = new periocidadRespaldosController();
 
-        $d->index();
+        $d->validate_back_currentDay();
     }
 }
