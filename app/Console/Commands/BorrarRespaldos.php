@@ -19,7 +19,7 @@ class BorrarRespaldos extends Command
      *
      * @var string
      */
-    protected $description = 'Ordernar de respaldos de las empresa con base a la configuración';
+    protected $description = 'Ordenar de respaldos de las empresa con base a la configuración';
 
     /**
      * Create a new command instance.
