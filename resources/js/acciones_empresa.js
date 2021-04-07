@@ -107,12 +107,14 @@ $(function() {
 
         let file = $(this).data('url');
         let type = $(this).data('type');
+        let id = $('#idSeleccionado').val();
         let _token = $("input[name=_token]").val();
         $("#fileSelected").val(file);
 
          if( type == 'directory' ){
             $.post(currentURL+'/drive-list', {
                 ruta: file,
+                id: id,
                 _token: _token
             }, function(data, textStatus, xhr) {
 
@@ -331,10 +333,12 @@ $(function() {
     $(document).on("click", ".return", function(e) {
 
         let ruta = $(this).data('url_return');
+        let id = $('#idSeleccionado').val();
         let _token = $("input[name=_token]").val();
 
         $.post(currentURL+'/drive-list', {
             ruta: ruta,
+            id: id,
             _token: _token
         }, function(data, textStatus, xhr) {
 

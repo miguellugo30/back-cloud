@@ -26,7 +26,7 @@
             @else
                 DRIVE : <i class="fas fa-home" data-url_return="{{$ruta[0]}}"></i>
             @endif
-
+            {{ $id }}
         </h3>
           <div class="card-tools">
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
@@ -40,7 +40,7 @@
                         <button type="button" id="deleteFile" class="btn btn-danger" style="display: none"><i class="fas fa-trash"></i> Eliminar</button>
                     @endcan
                 </div>
-               <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="{{-- $id --}}">
+               <input type="hidden" name="idSeleccionado" id="idSeleccionado" value="{{ $id }}">
                <input type="hidden" name="ruta" id="ruta" value="{{ $url }}">
                <input type="hidden" name="fileSelected" id="fileSelected" value="">
                <input type="hidden" name="fileSelectedType" id="fileSelectedType" value="">

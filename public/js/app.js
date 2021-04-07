@@ -568,6 +568,7 @@ $(function () {
     e.preventDefault();
     var file = $(this).data('url');
     var type = $(this).data('type');
+    var id = $('#idSeleccionado').val();
 
     var _token = $("input[name=_token]").val();
 
@@ -576,6 +577,7 @@ $(function () {
     if (type == 'directory') {
       $.post(currentURL + '/drive-list', {
         ruta: file,
+        id: id,
         _token: _token
       }, function (data, textStatus, xhr) {
         $(".content ").html(data); //$(".container-fluid h1").text('Empresas');
@@ -736,11 +738,13 @@ $(function () {
   });
   $(document).on("click", ".return", function (e) {
     var ruta = $(this).data('url_return');
+    var id = $('#idSeleccionado').val();
 
     var _token = $("input[name=_token]").val();
 
     $.post(currentURL + '/drive-list', {
       ruta: ruta,
+      id: id,
       _token: _token
     }, function (data, textStatus, xhr) {
       $(".content ").html(data); //$(".container-fluid h1").text('Empresas');

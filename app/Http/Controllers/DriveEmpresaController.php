@@ -196,8 +196,10 @@ class DriveEmpresaController extends Controller
      */
     public function viewList(Request $request)
     {
+        //dd( $request );
         $id = $request->id;
         $url = $request->ruta;
+
 
         $directories = Storage::disk('NAS_energeticos')->directories($url);
         $files = Storage::disk('NAS_energeticos')->files($url);
