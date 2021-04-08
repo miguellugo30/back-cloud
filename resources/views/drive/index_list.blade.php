@@ -50,7 +50,7 @@
         <div class="container">
             <div class="row row-cols-7 justify-content-start">
                 <div class="w-100"></div>
-                <table class="table">
+                <table class="table table-sm">
                     <thead class="thead-light">
                         <tr>
                             <th>Nombre</th>
