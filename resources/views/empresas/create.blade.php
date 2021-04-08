@@ -14,6 +14,15 @@
             <input type="text" class="form-control form-control-sm" id="url_respaldo" placeholder="Ruta Respaldo">
         </div>
         <div class="form-group">
+            <label for="calle">Nas *:</label>
+            <select name="dia_semana" id="nas" class="form-control form-control-sm">
+                <option value="">Selecciona una opción</option>
+                @foreach ($nas as $n)
+                    <option value="{{$n->id}}">{{$n->Nombre}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <label for="calle">Respaldos diarios* :</label>
             <input type="number" min="1" max="7" class="form-control form-control-sm" id="no_respaldos" placeholder="Número de Respaldos">
         </div>

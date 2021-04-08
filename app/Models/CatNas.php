@@ -5,26 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Empresas extends Model
+class CatNas extends Model
 {
     use HasFactory;
-
     /**
      * Campos que pueden ser modificados
      */
     protected $fillable = [
-        'razon_social',
-        'intercompania',
-        'url_respaldo',
-        'no_respaldos',
-        'ultimo_anio',
-        'dia_semana',
-        'fin_mes',
+        'Nombre',
+        'ruta',
     ];
     /**
      * Nombre de la tabla
      */
-    protected $table = 'empresas';
+    protected $table = 'cat_nas';
     /**
      * Funcion para obtener solo los registros activos
      */
@@ -38,24 +32,10 @@ class Empresas extends Model
     |--------------------------------------------------------------------------
     */
     /**
-     * Relacion uno a uno, con tabla intermedia
-     */
-    public function Usuarios()
-    {
-        return $this->belongsToMany(Users::class, 'users_empresas');
-    }
-    /**
-     * Relacion con Conexiones una a muchos
-     */
-    public function Conexiones()
-    {
-        return $this->hasMany(Conexiones::class);
-    }
-     /**
      * Relacion muchos a muchos, con tabla intermedia
      */
-    public function Nas()
+    public function Empresas()
     {
-        return $this->belongsToMany(CatNas::class, 'empresas_nas');
+        return $this->belongsToMany(Empresas::class, 'empresas_nas');
     }
 }

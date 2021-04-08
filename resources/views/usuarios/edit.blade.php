@@ -95,6 +95,32 @@
                         </tr>
                         <tr>
                             <td colspan="5">
+                                <input type="checkbox" class="permisos_config" name="permisos[]" id="permisos[]" data-value="nas" value="view nas"  {{ $usuario->hasPermissionTo( 'view nas' ) ? 'checked' : '' }}> Nas
+                            </td>
+                        </tr>
+                        <tr style="display:{{ $usuario->hasPermissionTo( 'view nas' ) ? 'block' : 'none' }}" class="permisos permisos_config_nas" id="permisos_nas">
+                            <td>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <input type="checkbox" name="permisos[]" id="permisos[]" value="create nas" {{ $usuario->hasPermissionTo( 'create nas' ) ? 'checked' : '' }}>
+                                        <i class="fas fa-folder-plus"></i>
+                                        Crear Nas
+                                    </li>
+                                    <li class="list-group-item">
+                                        <input type="checkbox" name="permisos[]" id="permisos[]" value="edit nas" {{ $usuario->hasPermissionTo( 'edit nas' ) ? 'checked' : '' }}>
+                                        <i class="far fa-edit"></i>
+                                        Editar Nas
+                                    </li>
+                                    <li class="list-group-item">
+                                        <input type="checkbox" name="permisos[]" id="permisos[]" value="delete nas" {{ $usuario->hasPermissionTo( 'delete nas' ) ? 'checked' : '' }}>
+                                        <i class="fas fa-trash"></i>
+                                        Eliminar Nas
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
                                 <input type="checkbox" class="permisos_config" name="permisos[]" id="permisos[]" data-value="logs" value="view logs" {{ $usuario->hasPermissionTo( 'view logs' ) ? 'checked' : '' }}> Log de Actividades
                             </td>
                         </tr>

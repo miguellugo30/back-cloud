@@ -10,19 +10,22 @@ use Spatie\Permission\Models\Permission;
  * Modelos
  */
 use App\Models\Empresas;
+use App\Models\CatNas;
 
 class EmpresasController extends Controller
 {
     private $empresas;
     private $permisos;
+    private $nas;
      /**
      * Constructor para obtener el id empresa
      * con base al usuario que esta usando la sesion
      */
-    public function __construct(Empresas $empresas, Permission $permisos)
+    public function __construct(Empresas $empresas, Permission $permisos, CatNas $nas)
     {
         $this->empresas = $empresas;
         $this->permisos = $permisos;
+        $this->nas = $nas;
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +36,7 @@ class EmpresasController extends Controller
         /**
          * Obtenemos las empresas activas
          */
-        $empresas = $this->empresas::active()->get();
+        $empresas = $this->empresas::active()->with('Nas')->get();
         return view('empresas.index', compact('empresas'));
     }
 
@@ -43,7 +46,8 @@ class EmpresasController extends Controller
      */
     public function create()
     {
-        return view('empresas.create');
+        $nas = $this->nas::active()->get();
+        return view('empresas.create', compact('nas'));
     }
 
     /**
@@ -74,6 +78,10 @@ class EmpresasController extends Controller
             $this->permisos::create(['name' => $newPermissions[$i].$empresa->id]);
         }
         /**
+         * relacionamos la empresa con su NAS
+         */
+        $empresa->Nas()->attach($request->nas);
+        /**
          * Redirigimos a la ruta index
          */
         return redirect()->route('empresas.index');
@@ -100,8 +108,9 @@ class EmpresasController extends Controller
          * Obtenemos el registro a editar
          */
         $empresa = $this->empresas::where( 'id', $id )->get()->first();
+        $nas = $this->nas::active()->get();
 
-        return view('empresas.edit', compact('empresa'));
+        return view('empresas.edit', compact('empresa', 'nas'));
     }
 
     /**
@@ -112,6 +121,7 @@ class EmpresasController extends Controller
      */
     public function update(EmpresasRequest $request, $id)
     {
+        $empresa = $this->empresas::find($id);
         /**
          * Actualizamos el registro
          */
@@ -125,6 +135,11 @@ class EmpresasController extends Controller
                             'dia_semana' => $request->dia_semana,
                             'fin_mes' => $request->fin_mes,
                         ]);
+        /**
+         * Relacionamos las NAS a la empresa
+         */
+        $empresa->Nas()->detach();
+        $empresa->Nas()->attach($request->nas);
         /**
          * Redirigimos a la ruta index
          */

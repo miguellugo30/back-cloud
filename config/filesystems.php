@@ -51,6 +51,22 @@ return [
             ],
         ],
 
+        'NAS_autos' => [
+            'driver' => 'local',
+            'root' => storage_path('app')."/../../BCAutos",
+            'url' => env('APP_URL').'/nas_autos',
+            'permissions' => [
+                'file' => [
+                    'public' => 0664,
+                    'private' => 0600,
+                ],
+                'dir' => [
+                    'public' => 0775,
+                    'private' => 0700,
+                ],
+            ],
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -94,6 +110,7 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('nas_energeticos') => storage_path('../BCEnergeticos'),
+        public_path('nas_autos') => storage_path('../BCAutos'),
     ],
 
 ];

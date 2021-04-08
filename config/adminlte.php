@@ -249,6 +249,14 @@ return [
             'url' => '#',
         ],
         [
+            'text' => 'Nas',
+            'icon' => 'fas fa-database',
+            'classes' => 'nas',
+            'can' => 'view cat-nas',
+            'topnav_right' => true,
+            'url' => '#',
+        ],
+        [
             'text' => 'Log',
             'icon' => 'fas fa-user-secret',
             'classes' => 'logs',

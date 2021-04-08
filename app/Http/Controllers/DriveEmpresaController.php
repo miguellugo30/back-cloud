@@ -29,8 +29,11 @@ class DriveEmpresaController extends Controller
         $id = $request->id;
         $url = $request->ruta;
 
-        $directories = Storage::disk('NAS_energeticos')->directories($url);
-        $files = Storage::disk('NAS_energeticos')->files($url);
+        $empresaNas = Empresas::where('id', $id)->with('Nas')->first();
+        $nas = $empresaNas->Nas->first()->ruta;
+
+        $directories = Storage::disk($nas)->directories($url);
+        $files = Storage::disk($nas)->files($url);
 
 
         return view('drive.index', compact('id', 'directories', 'files', 'url'));
@@ -196,13 +199,13 @@ class DriveEmpresaController extends Controller
      */
     public function viewList(Request $request)
     {
-        //dd( $request );
         $id = $request->id;
         $url = $request->ruta;
+        $empresaNas = Empresas::where('id', $id)->with('Nas')->first();
+        $nas = $empresaNas->Nas->first()->ruta;
 
-
-        $directories = Storage::disk('NAS_energeticos')->directories($url);
-        $files = Storage::disk('NAS_energeticos')->files($url);
+        $directories = Storage::disk($nas)->directories($url);
+        $files = Storage::disk($nas)->files($url);
 
         $data = collect();
 
@@ -211,9 +214,9 @@ class DriveEmpresaController extends Controller
            $f = collect([
                     'url' => $d,
                     'name' => $this->getName( $d ),
-                    'lastModified' => $this->getDate($d),
-                    'type' => $this->getType($d),
-                    'size' => $this->getSize($d),
+                    'lastModified' => $this->getDate($d, $nas),
+                    'type' => $this->getType($d, $nas),
+                    'size' => $this->getSize($d, $nas),
            ]);
 
             $data->push($f);
@@ -224,9 +227,9 @@ class DriveEmpresaController extends Controller
             $f = collect([
                     'url' => $d,
                     'name' => $this->getName( $d ),
-                    'lastModified' => $this->getDate($d),
-                    'type' => $this->getType($d),
-                    'size' => $this->getSize($d),
+                    'lastModified' => $this->getDate($d, $nas),
+                    'type' => $this->getType($d, $nas),
+                    'size' => $this->getSize($d, $nas),
                 ]);
 
             $data->push($f);
@@ -258,9 +261,9 @@ class DriveEmpresaController extends Controller
      * @param [string] $file
      * @return [date] $date
      */
-    public function getDate($file)
+    public function getDate($file, $nas)
     {
-        $di = Storage::disk('NAS_energeticos')->lastModified($file);
+        $di = Storage::disk($nas)->lastModified($file);
         $date = Carbon::createFromTimestamp($di)->format('d/m/Y H:i:s');
 
         return $date;
@@ -272,9 +275,9 @@ class DriveEmpresaController extends Controller
      * @param [String] $file
      * @return [String] $type
      */
-    public function getType($file)
+    public function getType($file, $nas)
     {
-        $ty = explode('/', Storage::disk('NAS_energeticos')->mimeType($file));
+        $ty = explode('/', Storage::disk($nas)->mimeType($file));
         if ( count($ty) > 1 )
         {
             return Str::ucfirst( $ty[ count($ty) -1  ] );
@@ -290,9 +293,9 @@ class DriveEmpresaController extends Controller
      * @param [string] $file
      * @return [string] $size
      */
-    public function getSize($file)
+    public function getSize($file, $nas)
     {
-        $size = Storage::disk('NAS_energeticos')->size($file);
+        $size = Storage::disk($nas)->size($file);
 
         if ($size > 0)
         {

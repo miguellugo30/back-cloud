@@ -22,6 +22,7 @@
             <thead class="thead-light">
                 <th>Inter Compañia</th>
                 <th>Razón Social</th>
+                <th>Nas</th>
                 <th class="text-center">Número de Respaldos</th>
                 <th class="text-center">Día de la semana</th>
                 <th class="text-center">Conservar fin de mes</th>
@@ -32,6 +33,11 @@
                     <tr data-id="{{ $empresa->id }}">
                         <td>{{ $empresa->intercompania }}</td>
                         <td>{{ $empresa->razon_social }}</td>
+                        <td>
+                            @if ($empresa->Nas->isNotEmpty())
+                                {{ $empresa->Nas->first()->Nombre }}
+                            @endif
+                        </td>
                         <td class="text-center">{{ $empresa->no_respaldos }}</td>
                         <td class="text-center">{{ $empresa->dia_semana }}</td>
                         <td class="text-center">

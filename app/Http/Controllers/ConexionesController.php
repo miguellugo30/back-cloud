@@ -34,12 +34,6 @@ class ConexionesController extends Controller
     public function index()
     {
         $conexiones = $this->conexiones::with('Empresas')->active()->get();
-        //dd( $conexiones->first()->host );
-
-            //$decrypted = Crypt::decryptString($conexiones->first()->host);
-           // dd( $decrypted );
-
-
 
         return view('conexiones.index', compact('conexiones'));
     }

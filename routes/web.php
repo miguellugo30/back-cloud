@@ -48,6 +48,12 @@ Route::middleware('auth')->group(function() {
     Route::resource('conexion-ssh',App\Http\Controllers\ConexionSshController::class);
 });
 /*
+ * Rutas para CRUD de Nas
+ */
+Route::middleware('auth')->group(function() {
+    Route::resource('cat-nas',App\Http\Controllers\CatNasController::class);
+});
+/*
  * Rutas para CRUD de Conexiones
  */
 Route::middleware('auth')->group(function() {

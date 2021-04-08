@@ -52,25 +52,27 @@
             <div class="row row-cols-7 justify-content-start">
                 <div class="w-100"></div>
                 @foreach ($directories as $d)
-                    <div class="col-2 text-center selectFile" style="cursor: pointer" data-type="directory" data-url="{{ $d }}">
-                        @if (\Str::endsWith($d,'lera'))
-                            <i class="far fa-trash-alt fa-2x text-info"></i>
-                        @else
-                            <i class="fas fa-folder fa-2x text-warning"></i>
-                        @endif
-
-                        @php
-                            $di = explode('/', $d);
-                        @endphp
-
-                        <p>
-                            @if ( count($di) > 1 )
-                                {{$di[ count($di) -1  ]}}
+                    @if (!\Str::contains($d, ['@']))
+                        <div class="col-2 text-center selectFile" style="cursor: pointer" data-type="directory" data-url="{{ $d }}">
+                            @if (\Str::endsWith($d,'lera'))
+                                <i class="far fa-trash-alt fa-2x text-info"></i>
                             @else
-                                {{$di[0]}}
+                                <i class="fas fa-folder fa-2x text-warning"></i>
                             @endif
-                        </p>
-                    </div>
+
+                            @php
+                                $di = explode('/', $d);
+                            @endphp
+
+                            <p>
+                                @if ( count($di) > 1 )
+                                    {{$di[ count($di) -1  ]}}
+                                @else
+                                    {{$di[0]}}
+                                @endif
+                            </p>
+                        </div>
+                    @endif
                 @endforeach
                 @foreach ($files as $f)
                 <div class="col-2 text-center selectFile pt-3" style="cursor: pointer" data-type="file" data-url="{{ $f }}">

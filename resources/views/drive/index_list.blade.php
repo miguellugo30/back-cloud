@@ -26,7 +26,6 @@
             @else
                 DRIVE : <i class="fas fa-home" data-url_return="{{$ruta[0]}}"></i>
             @endif
-            {{ $id }}
         </h3>
           <div class="card-tools">
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
@@ -62,46 +61,49 @@
                     </thead>
                     <tbody>
                         @foreach ($data as $d)
-                            @if ( $d['type'] == 'Directory' )
-                                <tr class="col-2 selectFile" style="cursor: pointer" data-type="directory" data-url="{{ $d['url'] }}">
-                             @else
-                                <tr class="col-2 selectFile" style="cursor: pointer" data-type="file" data-url="{{ $d['url']}}">
-                            @endif
-                                <td>
-                                    @if ( $d['type'] == 'Directory' )
-                                    <i class="fas fa-folder fa-1x text-warning"></i>
-                                    @else
-                                        @if (\Str::endsWith($d['name'],['jpeg', 'jpg', 'png']))
-                                            <i class="far fa-file-image fa-1x text-info"></i>
-                                        @elseif (\Str::endsWith($d['name'],['doc', 'docx']))
-                                            <i class="far fa-file-word fa-1x text-primary"></i>
-                                        @elseif (\Str::endsWith($d['name'],['xlsx', 'xls', 'xlsm', 'xlsb', 'xltx']))
-                                            <i class="far fa-file-excel fa-1x text-success"></i>
-                                        @elseif (\Str::endsWith($d['name'],['pdf']))
-                                            <i class="far fa-file-pdf fa-1x text-danger"></i>
-                                        @elseif (\Str::endsWith($d['name'],['txt']))
-                                            <i class="far fa-file-alt fa-1x text-info"></i>
-                                        @elseif (\Str::endsWith($d['name'],['ppt','pptx','pptm']))
-                                            <i class="far fa-file-powerpoint fa-1x text-danger"></i>
-                                        @elseif (\Str::endsWith($d['name'],['mp3', 'wav' ]))
-                                            <i class="far fa-file-audio fa-1x text-danger"></i>
-                                        @elseif (\Str::endsWith($d['name'],['zip', 'rar', 'unzip', 'tar', 'gz' ]))
-                                            <i class="far fa-file-archive fa-1x text-danger"></i>
-                                        @else
-                                            <i class="fas fa-file fa-1x text-info"></i>
-                                        @endif
-                                    @endif
+                            @if (!\Str::contains($d['name'], ['@']))
 
-                                    {{ $d['name'] }}
-                                </td>
-                                <td>{{ $d['lastModified'] }}</td>
-                                <td>
-                                    @if ( $d['type'] != 'Directory' )
-                                        {{ $d['type'] }}
-                                    @endif
-                                </td>
-                                <td>{{ $d['size'] }}</td>
-                            </tr>
+                                @if ( $d['type'] == 'Directory' )
+                                    <tr class="col-2 selectFile" style="cursor: pointer" data-type="directory" data-url="{{ $d['url'] }}">
+                                @else
+                                    <tr class="col-2 selectFile" style="cursor: pointer" data-type="file" data-url="{{ $d['url']}}">
+                                @endif
+                                    <td>
+                                        @if ( $d['type'] == 'Directory' )
+                                        <i class="fas fa-folder fa-1x text-warning"></i>
+                                        @else
+                                            @if (\Str::endsWith($d['name'],['jpeg', 'jpg', 'png']))
+                                                <i class="far fa-file-image fa-1x text-info"></i>
+                                            @elseif (\Str::endsWith($d['name'],['doc', 'docx']))
+                                                <i class="far fa-file-word fa-1x text-primary"></i>
+                                            @elseif (\Str::endsWith($d['name'],['xlsx', 'xls', 'xlsm', 'xlsb', 'xltx']))
+                                                <i class="far fa-file-excel fa-1x text-success"></i>
+                                            @elseif (\Str::endsWith($d['name'],['pdf']))
+                                                <i class="far fa-file-pdf fa-1x text-danger"></i>
+                                            @elseif (\Str::endsWith($d['name'],['txt']))
+                                                <i class="far fa-file-alt fa-1x text-info"></i>
+                                            @elseif (\Str::endsWith($d['name'],['ppt','pptx','pptm']))
+                                                <i class="far fa-file-powerpoint fa-1x text-danger"></i>
+                                            @elseif (\Str::endsWith($d['name'],['mp3', 'wav' ]))
+                                                <i class="far fa-file-audio fa-1x text-danger"></i>
+                                            @elseif (\Str::endsWith($d['name'],['zip', 'rar', 'unzip', 'tar', 'gz' ]))
+                                                <i class="far fa-file-archive fa-1x text-danger"></i>
+                                            @else
+                                                <i class="fas fa-file fa-1x text-info"></i>
+                                            @endif
+                                        @endif
+
+                                        {{ $d['name'] }}
+                                    </td>
+                                    <td>{{ $d['lastModified'] }}</td>
+                                    <td>
+                                        @if ( $d['type'] != 'Directory' )
+                                            {{ $d['type'] }}
+                                        @endif
+                                    </td>
+                                    <td>{{ $d['size'] }}</td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
